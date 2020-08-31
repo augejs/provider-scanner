@@ -1,0 +1,244 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@augejs/provider-scanner</title>
+	<meta name="description" content="Documentation for @augejs/provider-scanner">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@augejs/provider-scanner</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>@augejs/provider-scanner</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><code>provider-scanner</code> is a  Provider&#39;s metadata scan framework for nodeJs which is base on javascript <code>Reflect.defineMetadata</code>.</p>
+				<a href="#how-to-use" id="how-to-use" style="color: inherit; text-decoration: none;">
+					<h3>How To Use</h3>
+				</a>
+				<pre><code class="language-javascript">npm i @augejs/provider-scanner</code></pre>
+				<a href="#what-is-a-provider" id="what-is-a-provider" style="color: inherit; text-decoration: none;">
+					<h3>What is a <code>Provider</code></h3>
+				</a>
+				<p>To be honest, I don&#39;t know what a <code>Provider</code> exactly is. Maybe an Entity, a File, a structure, a component, a service, or a string. What ever, it can be defined with kinds of metadata.</p>
+				<p>The <code>provider-scanner</code> just focus on the scan process with kinds of metadata. Finally the result is what we want.</p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Metadata } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@augejs/provider-scanner&#x27;</span>;
+
+<span class="hljs-keyword">const</span> employee = {
+  <span class="hljs-attr">fullName</span>: <span class="hljs-string">&#x27;xxxx&#x27;</span>,
+  <span class="hljs-attr">age</span>: <span class="hljs-number">12</span>,
+  <span class="hljs-attr">headImageUrl</span>: <span class="hljs-string">&#x27;xxxx&#x27;</span>,
+};
+<span class="hljs-comment">// here the employee structure consider as a provider</span>
+
+Metadata.defineMetadata(Metadata, 
+{
+  <span class="hljs-attr">reporter</span>: <span class="hljs-string">&#x27;xxx&#x27;</span>,
+  <span class="hljs-attr">messageOwner</span>: <span class="hljs-string">&#x27;xxx&#x27;</span>
+}, employee);
+
+<span class="hljs-comment">// here we add a metadata to the employee structure.</span></code></pre>
+				<p>A <code>Provider</code> can store kinds of <code>metadata</code> by using <code>Reflect.defineMetadata</code>.  (Also this behavior can be used by <code>Decorator</code>). </p>
+				<p><img src="./docs/assets/provider-model.png" alt="provider model"></p>
+				<a href="#organize-provider" id="organize-provider" style="color: inherit; text-decoration: none;">
+					<h3>Organize Provider</h3>
+				</a>
+				<p>Let&#39;s take a look at below diagram,  it a tree of <code>Provider</code>,  I think the tree structure is a good idea to organize things, thinking about the user-interface elements,  it&#39;s a tree structure. thinking about the computer file system, it&#39;s a tree structure.</p>
+				<p><img src="./docs/assets/provider-tree.png" alt="provider tree"></p>
+				<blockquote>
+					<p>If the diagram means a school then the <code>Provider</code> means teachers and students. </p>
+					<p>If the diagram means a program then the <code>Provider</code> means logic unit.</p>
+				</blockquote>
+				<a href="#parentmetadata" id="parentmetadata" style="color: inherit; text-decoration: none;">
+					<h3>ParentMetadata</h3>
+				</a>
+				<p>Here is a <code>Parent Metadata</code> which can define the children metadata to <code>Provider</code></p>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { ParentMetadata } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@augejs/provider-scanner&#x27;</span>;
+
+<span class="hljs-keyword">const</span> employee = {
+  <span class="hljs-attr">fullName</span>: <span class="hljs-string">&#x27;xxxx&#x27;</span>,
+  <span class="hljs-attr">age</span>: <span class="hljs-number">12</span>,
+  <span class="hljs-attr">headImageUrl</span>: <span class="hljs-string">&#x27;xxxx&#x27;</span>,
+};
+<span class="hljs-comment">// here the employee structure consider as a provider</span>
+
+<span class="hljs-keyword">const</span> manager = {
+  <span class="hljs-attr">fullName</span>: <span class="hljs-string">&#x27;xxxx&#x27;</span>,
+  <span class="hljs-attr">age</span>: <span class="hljs-number">54</span>,
+  <span class="hljs-attr">headImageUrl</span>: <span class="hljs-string">&#x27;xxxx&#x27;</span>,
+};
+<span class="hljs-comment">// here the manager structure consider as a provider</span>
+
+ParentMetadata.defineMetadata( 
+[
+  employee,
+], manager);
+<span class="hljs-comment">// here we add the employee to the manager as this child node.</span>
+
+<span class="hljs-comment">// we can easily use the `ParentMetadata` to build a tree structure which is composite of `providers` just the above diagram.</span></code></pre>
+				<a href="#scanhookmetadata" id="scanhookmetadata" style="color: inherit; text-decoration: none;">
+					<h3>ScanHookMetadata</h3>
+				</a>
+				<p>Here is a <code>ScanHookMetadata</code> which can define the metadata <code>hooks</code> to <code>Provider</code>.
+				And the hook will execute in scan process.</p>
+				<p><img src="./docs/assets/scan-hook-metadata.png" alt="scan-hook-metadata"></p>
+				<a href="#single-provider-hooks-execute-model" id="single-provider-hooks-execute-model" style="color: inherit; text-decoration: none;">
+					<h4>Single Provider Hooks Execute Model</h4>
+				</a>
+				<p>Go back to <code>Provider</code> , Maybe we need do some logic process  on <code>Provider</code> maybe process data, create new object, etc.  The below diagram show the idea. Each logic process is call a <code>hook</code>, hook can be nested, and all hooks of <code>Provider</code> share the data structure <code>ScanNode</code>  which can store some process results for current <code>Provider</code> </p>
+				<p><img src="./docs/assets/provider-hook.png" alt="provider-hook"></p>
+				<blockquote>
+					<p>The hook execute order is A hook1-pre -&gt; A hook2-pre -&gt; A hook2-after-&gt;A hook1-after </p>
+				</blockquote>
+				<p>The <code>hook</code> idea here is from KOA, it just a middleware in KOA.</p>
+				<pre><code>async (context: any, <span class="hljs-keyword">next</span>:Function) {
+  <span class="hljs-regexp">//</span> some logic before
+  await <span class="hljs-keyword">next</span>();
+  <span class="hljs-regexp">//</span> some logic after
+}</code></pre>
+				<blockquote>
+					<p>The context here can get the current process ScanNode.</p>
+				</blockquote>
+				<p><img src="./docs/assets/Onion.png" alt="Onion"></p>
+				<blockquote>
+					<p>Maybe this diagram can explain how a middleware works.</p>
+				</blockquote>
+				<a href="#sibling-provider-hooks-execute-model" id="sibling-provider-hooks-execute-model" style="color: inherit; text-decoration: none;">
+					<h4>Sibling Provider Hooks Execute Model</h4>
+				</a>
+				<p>Provider C is sibling of provide B</p>
+				<p><img src="./docs/assets/sibling-provider-hook.png" alt="sibling-provider-hook"></p>
+				<blockquote>
+					<p>The hook execute order is  B hooks -&gt; C hooks</p>
+				</blockquote>
+				<a href="#parent-provider-hooks-execute-model" id="parent-provider-hooks-execute-model" style="color: inherit; text-decoration: none;">
+					<h4>Parent Provider Hooks Execute Model</h4>
+				</a>
+				<p>Provider A is parent of Provider B</p>
+				<p><img src="./docs/assets/parent-provider-hook.png" alt="parent-provider-hook"></p>
+				<blockquote>
+					<p>The hook execute order is is A hook1-pre -&gt; A hook2-pre -&gt;  <strong><em>B hooks</em></strong>    -&gt; A hook2-after-&gt;A hook1-after </p>
+					<p>the B  hooks seem is inner A</p>
+				</blockquote>
+				<p>So finally, the scanner go through the provider tree and execute all the hooks around the provide. You can do every thing you want base on provider metadata and hooks to build anything.</p>
+				<p><img src="./docs/assets/scan-execute-order.png" alt="scan-execute-order"></p>
+				<blockquote>
+					<p>This is the <code>Provide Tree</code>(above diagram) scan execute order. It&#39;s like program  function execute process right?</p>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_interfaces_iscancontext_.html">&quot;interfaces/IScan<wbr>Context&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_interfaces_iscannode_.html">&quot;interfaces/IScan<wbr>Node&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_metadata_metadata_.html">&quot;metadata/<wbr>Metadata&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_metadata_parentmetadata_.html">&quot;metadata/<wbr>Parent<wbr>Metadata&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_metadata_scanhookmetadata_.html">&quot;metadata/<wbr>Scan<wbr>Hook<wbr>Metadata&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_metadata_scanprioritymetadata_.html">&quot;metadata/<wbr>Scan<wbr>Priority<wbr>Metadata&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_utils_hookutil_.html">&quot;utils/hook<wbr>Util&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_utils_scanner_.html">&quot;utils/scanner&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
