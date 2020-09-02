@@ -10,9 +10,6 @@ import {
 import * as hookUtil from './hookUtil';
 
 /** @ignore */
-const NAME_PATH_SPLIT_CHAR = ".";
-
-/** @ignore */
 let instanceNameId:number = 0;
 
 /** @ignore */
@@ -30,7 +27,6 @@ function createScanNode(provider:object, context:IScanContext, parent:IScanNode 
     priority: ScanPriorityMetadata.getMetadata(provider),
     name,
     namePaths: NameMetadata.concatArrayNamePath(name, parent?.namePaths || null),
-    namePath: NameMetadata.concatStringNamePath(name, parent?.namePath || null, NAME_PATH_SPLIT_CHAR),
   }
 
   for (const childProvider of ParentMetadata.getMetadata(provider)) {
