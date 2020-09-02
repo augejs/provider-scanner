@@ -48,8 +48,4 @@ export interface IScanNode {
   */
   namePaths: string[], //[name, name, name]
   // namePath is the unique name path of scanNode
-  /**
-   * @ignore
-   */
-  namePath: string //xxx.xxx.xxx
 }
