@@ -37,4 +37,8 @@ export class Metadata {
 
     Reflect.defineMetadata(key, metadata, target);
   }
+
+  static decorate(decorators: ClassDecorator[], target: Function) {
+    Reflect.decorate(decorators, target);
+  }
 }
