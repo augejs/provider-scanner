@@ -13,7 +13,6 @@ function createScanNode(priority: number):IScanNode {
     priority,
     name: null,
     namePaths: [],
-    namePath: '',
   }
 }
 

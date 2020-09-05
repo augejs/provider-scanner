@@ -83,12 +83,12 @@ ParentMetadata.defineMetadata(
 // we can easily use the `ParentMetadata` to build a tree structure which is composite of `providers` just the above diagram.
 ```
 
-### ScanHookMetadata
+### HookMetadata
 
-Here is a `ScanHookMetadata` which can define the metadata `hooks` to `Provider`.
+Here is a `HookMetadata` which can define the metadata `hooks` to `Provider`.
 And the hook will execute in scan process.
 
-![scan-hook-metadata](./docs/assets/scan-hook-metadata.png)
+![hook-metadata](./docs/assets/scan-hook-metadata.png)
 
 #### Single Provider Hooks Execute Model
 

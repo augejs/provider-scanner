@@ -1,4 +1,4 @@
-import { ScanHookMetadata } from './ScanHookMetadata';
+import { HookMetadata } from './HookMetadata';
 import * as hookUtil from '../utils/hookUtil';
 
 describe('decorators: ScanPriority', () => {
@@ -6,7 +6,7 @@ describe('decorators: ScanPriority', () => {
     const fn = jest.fn();
 
     class A {};
-    ScanHookMetadata.defineMetadata(A, [
+    HookMetadata.defineMetadata(A, [
       async (_:any, next: Function) => {
         fn('1-1');
         await next();
@@ -19,7 +19,7 @@ describe('decorators: ScanPriority', () => {
       }
     ])
 
-    ScanHookMetadata.defineMetadata(A, [
+    HookMetadata.defineMetadata(A, [
       async (_:any, next: Function) => {
         fn('3-1');
         await next();
@@ -31,13 +31,13 @@ describe('decorators: ScanPriority', () => {
         fn('4-2');
       }
     ])
-    ScanHookMetadata.defineMetadata(A, async (_:any, next: Function) => {
+    HookMetadata.defineMetadata(A, async (_:any, next: Function) => {
       fn('5-1');
       await next();
       fn('5-2');
     })
 
-    await hookUtil.nestHooks(ScanHookMetadata.getMetadata(A))();
+    await hookUtil.nestHooks(HookMetadata.getMetadata(A))();
 
     expect(fn.mock.calls).toEqual([
       ['1-1'],
