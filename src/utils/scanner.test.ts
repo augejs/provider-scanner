@@ -1,4 +1,4 @@
-import { NameMetadata, ParentMetadata, ScanHookMetadata } from '../metadata';
+import { NameMetadata, ParentMetadata, HookMetadata } from '../metadata';
 import { scan } from './scanner';
 describe('utils: scanner', () => {
   it('scan node should have correctly execute order', async () => {
@@ -7,12 +7,12 @@ describe('utils: scanner', () => {
 
     function B(){};
     NameMetadata.defineMetadata(B);
-    ScanHookMetadata.defineMetadata(B, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(B, async (_:any, next: Function)=>{
       fn('B_1_start')
       await next();
       fn('B_1_end')
     });
-    ScanHookMetadata.defineMetadata(B, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(B, async (_:any, next: Function)=>{
       fn('B_2_start')
       await next();
       fn('B_2_end')
@@ -20,12 +20,12 @@ describe('utils: scanner', () => {
 
     function E() {};
     NameMetadata.defineMetadata(E);
-    ScanHookMetadata.defineMetadata(E, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(E, async (_:any, next: Function)=>{
       fn('E_1_start')
       await next();
       fn('E_1_end')
     });
-    ScanHookMetadata.defineMetadata(E, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(E, async (_:any, next: Function)=>{
       fn('E_2_start')
       await next();
       fn('E_2_end')
@@ -33,13 +33,13 @@ describe('utils: scanner', () => {
 
     function C(){};
     NameMetadata.defineMetadata(C);
-    ScanHookMetadata.defineMetadata(C, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(C, async (_:any, next: Function)=>{
       fn('C_1_start')
       await next();
       fn('C_1_end')
     });
 
-    ScanHookMetadata.defineMetadata(C, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(C, async (_:any, next: Function)=>{
       fn('C_2_start')
       await next();
       fn('C_2_end')
@@ -51,12 +51,12 @@ describe('utils: scanner', () => {
 
     function D() {};
     NameMetadata.defineMetadata(D);
-    ScanHookMetadata.defineMetadata(D, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(D, async (_:any, next: Function)=>{
       fn('D_1_start')
       await next();
       fn('D_1_end')
     });
-    ScanHookMetadata.defineMetadata(D, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(D, async (_:any, next: Function)=>{
       fn('D_2_start')
       await next();
       fn('D_2_end')
@@ -64,12 +64,12 @@ describe('utils: scanner', () => {
 
     function A() {};
     NameMetadata.defineMetadata(A);
-    ScanHookMetadata.defineMetadata(A, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(A, async (_:any, next: Function)=>{
       fn('A_1_start')
       await next();
       fn('A_1_end')
     });
-    ScanHookMetadata.defineMetadata(A, async (_:any, next: Function)=>{
+    HookMetadata.defineMetadata(A, async (_:any, next: Function)=>{
       fn('A_2_start')
       await next();
       fn('A_2_end')
