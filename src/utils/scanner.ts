@@ -1,7 +1,7 @@
 import { IScanNode, IScanContext } from "../interfaces";
 import {
   ParentMetadata,
-  ScanHookMetadata,
+  HookMetadata,
   ScanPriorityMetadata,
   ScanPrioritySortCompareMetadata,
   NameMetadata,
@@ -45,7 +45,7 @@ function buildScanNodeHook(scanNode:IScanNode, scanNodeHook: Function):Function 
     context.timeCost = new Date().getTime() - now;
   }
 
-  const selfHook:Function = hookUtil.nestHooks(ScanHookMetadata.getMetadata(scanNode.provider));
+  const selfHook:Function = hookUtil.nestHooks(HookMetadata.getMetadata(scanNode.provider));
   const childrenHook:Function = ChildrenHooksCompositeFunctionMetadata.getMetadata(scanNode.provider)(
     scanNode.children.map((childScanNode:IScanNode):Function => {
       return buildScanNodeHook(childScanNode, scanNodeHook);

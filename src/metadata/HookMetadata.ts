@@ -7,17 +7,17 @@ const noopHooks = [
   }
 ];
 
-export class ScanHookMetadata {
+export class HookMetadata {
   /**
    * define the metadata of hooks
    */
   static defineMetadata(target: object, hooks: Function | Function[]):void {
-    Metadata.defineInsertEndArrayMetadata(ScanHookMetadata,
+    Metadata.defineInsertEndArrayMetadata(HookMetadata,
       Array.isArray(hooks) ?
       hooks : [ hooks ], target);
   }
 
   static getMetadata(target: object): Function[] {
-    return Metadata.getMetadata(ScanHookMetadata, target) || noopHooks;
+    return Metadata.getMetadata(HookMetadata, target) || noopHooks;
   }
 }
