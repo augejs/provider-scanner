@@ -21,11 +21,17 @@ describe('decorators: Provider', () => {
 
     ParentMetadata.defineMetadata(X, [
       A,
-      [A_1, A_2, A_3, A_4, A_5, A_6, A_7, A_8 ],
+      [A_1, A_2],
+      [A_3, A_4],
+      [A_5, A_6],
+      [A_7, A_8]
     ]);
 
     expect(ParentMetadata.getMetadata(X)).toEqual([
       A
+    ]);
+    expect(ParentMetadata.getMetadata(A)).toEqual([
+      A_1, A_2, A_3, A_4, A_5, A_6, A_7, A_8
     ]);
   })
 
@@ -52,7 +58,9 @@ describe('decorators: Provider', () => {
       [A_9],
     ]);
 
-    expect(ParentMetadata.getMetadata(X)).toEqual([]);
+    expect(ParentMetadata.getMetadata(X)).toEqual([
+      A_1, A_2, A_9
+    ]);
     expect(ParentMetadata.getMetadata(A_2)).toEqual([
       A_3
     ]);
@@ -72,7 +80,6 @@ describe('decorators: Provider', () => {
         A_8
     ]);
   })
-
 
   it('should Provider decorator has correctly composite value', () => {
     class X {};
@@ -129,4 +136,5 @@ describe('decorators: Provider', () => {
     expect(ParentMetadata.getMetadata(D)).toEqual([D_1, D_2, D_3]);
     expect(ParentMetadata.getMetadata(D_2)).toEqual([D_2_1, D_2_2, D_2_3, D_2_4, D_2_5, D_2_6]);
   })
+
 })
