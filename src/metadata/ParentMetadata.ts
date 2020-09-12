@@ -9,13 +9,14 @@ export class ParentMetadata {
       let results:any = parentResults;
       for(const child of children) {
         if (Array.isArray(child) && (child as any[]).length > 0) {
-          iterateChildren(currentParentTarget, child as any[], []);
+          iterateChildren(currentParentTarget, child as any[], results);
         } else {
           currentParentTarget = child;
-          results.push(child);
+          results = [];
+          parentResults.push(child);
         }
       }
-      Metadata.defineMetadata(ParentMetadata, results, parentTarget);
+      Metadata.defineMetadata(ParentMetadata, parentResults, parentTarget);
     }
 
     iterateChildren(target, children, []);
