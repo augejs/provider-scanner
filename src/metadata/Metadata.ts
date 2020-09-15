@@ -27,19 +27,19 @@ export class Metadata {
   }
 
   static defineInsertEndArrayMetadata(key: any, metadata: any[], target: Object, propertyKey?: string | symbol):void {
-    const previousValue:[] = Reflect.getMetadata(key, target) || [];
+    const previousValue:[] = Metadata.getMetadata(key, target, propertyKey) || [];
     const value = [...previousValue, ...metadata];
     Metadata.defineMetadata(key, value, target, propertyKey);
   }
 
   static defineInsertBeginArrayMetadata(key: any, metadata: any[], target: Object, propertyKey?: string | symbol):void {
-    const previousValue:[] = Reflect.getMetadata(key, target) || [];
+    const previousValue:[] = Metadata.getMetadata(key, target, propertyKey) || [];
     const value = [...metadata, ...previousValue];
     Metadata.defineMetadata(key, value, target, propertyKey);
   }
 
   static defineMergeObjectMetadata(key: any, metadata: any,target: any, propertyKey?: string | symbol):void {
-    const previousValue:any = Reflect.getMetadata(key, target);
+    const previousValue:any = Metadata.getMetadata(key, target, propertyKey);
 
     if (typeof previousValue === 'object' && typeof metadata === 'object') {
       const mergeConfig:any = extend(true, {}, previousValue, metadata);
