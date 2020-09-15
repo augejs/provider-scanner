@@ -2,40 +2,52 @@ import 'reflect-metadata';
 import extend from 'extend';
 
 export class Metadata {
-  static defineMetadata (metadataKey:any, metadataValue:any, target: object):void {
-    Reflect.defineMetadata(metadataKey, metadataValue, target);
+  static defineMetadata (metadataKey:any, metadataValue:any, target: Object, propertyKey?: string | symbol):void {
+    if (!propertyKey) {
+      Reflect.defineMetadata(metadataKey, metadataValue, target);
+    } else {
+      Reflect.defineMetadata(metadataKey, metadataValue, target, propertyKey);
+    }
   }
 
-  static getMetadata (metadataKey: any, target: object):any {
-    return Reflect.getMetadata(metadataKey, target);
+  static getMetadata (metadataKey: any, target: Object, propertyKey?: string | symbol):any {
+    if (!propertyKey) {
+      return Reflect.getMetadata(metadataKey, target);
+    } else {
+      return Reflect.getMetadata(metadataKey, target, propertyKey);
+    }
   }
 
-  static hasMetadata(metadataKey: any, target: object):boolean {
-    return Reflect.hasMetadata(metadataKey, target);
+  static hasMetadata(metadataKey: any, target: Object, propertyKey?: string | symbol):boolean {
+    if (!propertyKey) {
+      return Reflect.hasMetadata(metadataKey, target);
+    } else {
+      return Reflect.hasMetadata(metadataKey, target, propertyKey);
+    }
   }
 
-  static defineInsertEndArrayMetadata(key: any, metadata: any[], target: object):void {
+  static defineInsertEndArrayMetadata(key: any, metadata: any[], target: Object, propertyKey?: string | symbol):void {
     const previousValue:[] = Reflect.getMetadata(key, target) || [];
     const value = [...previousValue, ...metadata];
-    Reflect.defineMetadata(key, value, target);
+    Metadata.defineMetadata(key, value, target, propertyKey);
   }
 
-  static defineInsertBeginArrayMetadata(key: any, metadata: any[], target: object):void {
+  static defineInsertBeginArrayMetadata(key: any, metadata: any[], target: Object, propertyKey?: string | symbol):void {
     const previousValue:[] = Reflect.getMetadata(key, target) || [];
     const value = [...metadata, ...previousValue];
-    Reflect.defineMetadata(key, value, target);
+    Metadata.defineMetadata(key, value, target, propertyKey);
   }
 
-  static defineMergeObjectMetadata(key: any, metadata: any,target: any):void {
+  static defineMergeObjectMetadata(key: any, metadata: any,target: any, propertyKey?: string | symbol):void {
     const previousValue:any = Reflect.getMetadata(key, target);
 
     if (typeof previousValue === 'object' && typeof metadata === 'object') {
       const mergeConfig:any = extend(true, {}, previousValue, metadata);
-      Reflect.defineMetadata(key, mergeConfig, target);
+      Metadata.defineMetadata(key, mergeConfig, target, propertyKey);
       return;
     }
 
-    Reflect.defineMetadata(key, metadata, target);
+    Metadata.defineMetadata(key, metadata, target, propertyKey);
   }
 
   static decorate(decorators: ClassDecorator[], target: Function) {
