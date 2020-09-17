@@ -3,15 +3,12 @@ import { IScanNode } from '../interfaces/IScanNode';
 
 function createScanNode(priority: number):IScanNode {
   return {
-    context: null,
+    context: {},
     provider: {},
-    inputs: new Map(),
-    outputs: new Map(),
-    timeCost: 0,
     children: [],
     parent: null,
     priority,
-    name: null,
+    name: '',
     namePaths: [],
   }
 }
