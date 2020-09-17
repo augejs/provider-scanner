@@ -10,23 +10,12 @@ export interface IScanNode {
   /**
    * the context of scan node
    */
-  context: IScanContext | null,
+  context: IScanContext,
   /**
    * the provider of scan node
    */
   provider: object,
-  /**
-   * the inputs of scan node
-   */
-  inputs: Map<any, any>,
-  /**
-   * the outputs of scan node
-   */
-  outputs: Map<any, any>,
-  /**
-   * the time cost of scan
-   */
-  timeCost: number,
+
   /**
    * the children scan nodes of current scan node
    */
@@ -42,10 +31,12 @@ export interface IScanNode {
   /**
    * the name  of current scan node
    */
-  name: string | null,
+  name: string,
   /**
   * @ignore
   */
   namePaths: string[], //[name, name, name]
   // namePath is the unique name path of scanNode
+
+  [prop: string]: any
 }

@@ -19,9 +19,6 @@ function createScanNode(provider:object, context:IScanContext, parent:IScanNode 
   const scanNode:IScanNode = {
     context,
     provider,
-    inputs: new Map<any, any>(),
-    outputs: new Map<any, any>(),
-    timeCost: 0,
     children,
     parent,
     priority: ScanPriorityMetadata.getMetadata(provider),
@@ -39,13 +36,10 @@ function createScanNode(provider:object, context:IScanContext, parent:IScanNode 
 
 /** @ignore */
 function buildScanNodeHook(scanNode:IScanNode, scanNodeHook: Function):Function {
-  const measureHook:Function = async (context: IScanNode, next: Function) => {
-    const now = new Date().getTime();
-    await next();
-    context.timeCost = new Date().getTime() - now;
-  }
+  const selfHook: Function = hookUtil.nestHooks([
+    scanNodeHook,
+    hookUtil.nestHooks(HookMetadata.getMetadata(scanNode.provider))]);
 
-  const selfHook:Function = hookUtil.nestHooks(HookMetadata.getMetadata(scanNode.provider));
   const childrenHook:Function = ChildrenHooksCompositeFunctionMetadata.getMetadata(scanNode.provider)(
     scanNode.children.map((childScanNode:IScanNode):Function => {
       return buildScanNodeHook(childScanNode, scanNodeHook);
@@ -54,8 +48,6 @@ function buildScanNodeHook(scanNode:IScanNode, scanNodeHook: Function):Function 
 
   return hookUtil.bindHookContext(scanNode,
     hookUtil.nestHooks([
-      measureHook,
-      scanNodeHook,
       selfHook,
       childrenHook,
     ])
@@ -72,7 +64,7 @@ function buildScanNodeHook(scanNode:IScanNode, scanNodeHook: Function):Function 
  * @category utils
  */
 type ScanOptions = {
-  inputs?: Map<any, any>,
+  inputs?: object,
   scanContextHook?: Function,
   scanNodeHook?: Function
 }
@@ -82,28 +74,19 @@ type ScanOptions = {
  *
  * @param provider the provider for scan context.
  */
-export async function scan(provider:object, options?:ScanOptions):Promise<IScanContext> {
-  const context:IScanContext = {
-    inputs: options?.inputs || new Map<any, any>(),
-    outputs: new Map<any, any>(),
-    timeCost: 0,
-    rootScanNode: null,
-  };
+export async function scan(provider:object, options?:ScanOptions): Promise<IScanContext> {
+  const context: IScanContext = {};
 
+  if (options?.inputs) {
+    Object.entries(options?.inputs).forEach(([key, value]) => {
+      context[key] = value;
+    });
+  }
   const rootScanNode:IScanNode = createScanNode(provider, context, null);
   context.rootScanNode = rootScanNode;
-
-  const measureHook:Function = async (context: IScanContext, next: Function) => {
-    const now = new Date().getTime();
-    await next();
-    context.timeCost = new Date().getTime() - now;
-  }
-
-  const selfHook:Function = options?.scanContextHook || hookUtil.noopHook;
-  const childrenHook:Function = buildScanNodeHook(rootScanNode, options?.scanNodeHook || hookUtil.noopHook);
-
+  const selfHook: Function =  options?.scanContextHook || hookUtil.noopHook;
+  const childrenHook: Function = buildScanNodeHook(rootScanNode, options?.scanNodeHook || hookUtil.noopHook);
   await hookUtil.nestHooks([
-    measureHook,
     selfHook,
     childrenHook,
   ])(context);

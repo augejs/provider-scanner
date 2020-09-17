@@ -90,12 +90,12 @@ describe('utils: scanner', () => {
      * |--|---|-- E
      * |--|-- D
      */
-    const inputs = new Map();
-    inputs.set('name', 'test');
     const contextHookMock = jest.fn();
     const scanNodeHookMock = jest.fn();
     const context = await scan(A, {
-      inputs,
+      inputs: {
+        name: 'test'
+      },
       scanContextHook: async (context: any, next: Function) => {
         contextHookMock();
         await next();
@@ -133,7 +133,7 @@ describe('utils: scanner', () => {
     ];
 
     expect(fn.mock.calls.flat()).toEqual(results);
-    expect(context.inputs.get('name')).toBe('test');
+    expect(context.name).toBe('test');
     expect(contextHookMock).toBeCalledTimes(1);
     expect(scanNodeHookMock).toBeCalledTimes(5);
   })
