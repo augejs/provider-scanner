@@ -84,6 +84,15 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel tsd-kind-interface tsd-parent-kind-module">
+				<h3 class="tsd-before-signature">Indexable</h3>
+				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>prop: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>IScanContext</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -91,10 +100,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_interfaces_iscancontext_.iscancontext.html#inputs" class="tsd-kind-icon">inputs</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_interfaces_iscancontext_.iscancontext.html#outputs" class="tsd-kind-icon">outputs</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_interfaces_iscancontext_.iscancontext.html#rootscannode" class="tsd-kind-icon">root<wbr>Scan<wbr>Node</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_interfaces_iscancontext_.iscancontext.html#timecost" class="tsd-kind-icon">time<wbr>Cost</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,62 +109,17 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="inputs" class="tsd-anchor"></a>
-					<h3>inputs</h3>
-					<div class="tsd-signature tsd-kind-icon">inputs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/eaa6cc2/src/interfaces/IScanContext.ts#L12">interfaces/IScanContext.ts:12</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>the inputs of scan context</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="outputs" class="tsd-anchor"></a>
-					<h3>outputs</h3>
-					<div class="tsd-signature tsd-kind-icon">outputs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/eaa6cc2/src/interfaces/IScanContext.ts#L17">interfaces/IScanContext.ts:17</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>the outputs of scan context</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="rootscannode" class="tsd-anchor"></a>
-					<h3>root<wbr>Scan<wbr>Node</h3>
-					<div class="tsd-signature tsd-kind-icon">root<wbr>Scan<wbr>Node<span class="tsd-signature-symbol">:</span> <a href="_interfaces_iscannode_.iscannode.html" class="tsd-signature-type">IScanNode</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> root<wbr>Scan<wbr>Node</h3>
+					<div class="tsd-signature tsd-kind-icon">root<wbr>Scan<wbr>Node<span class="tsd-signature-symbol">:</span> <a href="_interfaces_iscannode_.iscannode.html" class="tsd-signature-type">IScanNode</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/eaa6cc2/src/interfaces/IScanContext.ts#L27">interfaces/IScanContext.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/df93cd8/src/interfaces/IScanContext.ts#L12">interfaces/IScanContext.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>the root scan node</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="timecost" class="tsd-anchor"></a>
-					<h3>time<wbr>Cost</h3>
-					<div class="tsd-signature tsd-kind-icon">time<wbr>Cost<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/eaa6cc2/src/interfaces/IScanContext.ts#L22">interfaces/IScanContext.ts:22</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>the time cost of scan</p>
 						</div>
 					</div>
 				</section>
@@ -204,16 +165,7 @@
 						<a href="_interfaces_iscancontext_.iscancontext.html" class="tsd-kind-icon">IScan<wbr>Context</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_interfaces_iscancontext_.iscancontext.html#inputs" class="tsd-kind-icon">inputs</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_interfaces_iscancontext_.iscancontext.html#outputs" class="tsd-kind-icon">outputs</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_interfaces_iscancontext_.iscancontext.html#rootscannode" class="tsd-kind-icon">root<wbr>Scan<wbr>Node</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_interfaces_iscancontext_.iscancontext.html#timecost" class="tsd-kind-icon">time<wbr>Cost</a>
 							</li>
 						</ul>
 					</li>
