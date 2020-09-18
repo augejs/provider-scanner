@@ -36,9 +36,11 @@ function createScanNode(provider:object, context:IScanContext, parent:IScanNode 
 
 /** @ignore */
 function buildScanNodeHook(scanNode:IScanNode, scanNodeHook: Function):Function {
-  const selfHook: Function = hookUtil.nestHooks([
-    scanNodeHook,
-    hookUtil.nestHooks(HookMetadata.getMetadata(scanNode.provider))]);
+  const selfHook: Function = hookUtil.nestHooks(
+    [
+      hookUtil.nestHooks(HookMetadata.getMetadata(scanNode.provider)),
+      scanNodeHook
+    ]);
 
   const childrenHook:Function = ChildrenHooksCompositeFunctionMetadata.getMetadata(scanNode.provider)(
     scanNode.children.map((childScanNode:IScanNode):Function => {
