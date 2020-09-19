@@ -27,13 +27,29 @@ export class Metadata {
   }
 
   static defineInsertEndArrayMetadata(key: any, metadata: any[], target: Object, propertyKey?: string | symbol):void {
-    const previousValue:[] = Metadata.getMetadata(key, target, propertyKey) || [];
+    if (metadata.length === 0) return;
+
+    const previousValue: any[] = Metadata.getMetadata(key, target, propertyKey) || [];
+    if (previousValue.length > 0) {
+      metadata = metadata.filter(item => {
+        return !previousValue.includes(item);
+      })
+    }
+
     const value = [...previousValue, ...metadata];
     Metadata.defineMetadata(key, value, target, propertyKey);
   }
 
   static defineInsertBeginArrayMetadata(key: any, metadata: any[], target: Object, propertyKey?: string | symbol):void {
-    const previousValue:[] = Metadata.getMetadata(key, target, propertyKey) || [];
+    if (metadata.length === 0) return;
+    const previousValue: any[] = Metadata.getMetadata(key, target, propertyKey) || [];
+
+    if (previousValue.length > 0) {
+      metadata = metadata.filter(item => {
+        return !previousValue.includes(item);
+      })
+    }
+
     const value = [...metadata, ...previousValue];
     Metadata.defineMetadata(key, value, target, propertyKey);
   }
