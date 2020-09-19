@@ -96,11 +96,11 @@ describe('utils: scanner', () => {
       inputs: {
         name: 'test'
       },
-      scanContextHook: async (context: any, next: Function) => {
+      contextScanHook: async (context: any, next: Function) => {
         contextHookMock();
         await next();
       },
-      scanNodeHook: async (context: any, next: Function) => {
+      scanNodeScanHook: async (context: any, next: Function) => {
         scanNodeHookMock();
         await next();
       },

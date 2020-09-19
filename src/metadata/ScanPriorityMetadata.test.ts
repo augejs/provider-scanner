@@ -9,8 +9,7 @@ function createScanNode(priority: number):IScanNode {
     parent: null,
     priority,
     name: '',
-    namePaths: [],
-    traverse: (before?: Function, after?: Function)=>{}
+    namePaths: []
   }
 }
 
