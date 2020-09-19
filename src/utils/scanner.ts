@@ -13,6 +13,15 @@ import * as hookUtil from './hookUtil';
 let instanceNameId:number = 0;
 
 /** @ignore */
+async function traverseScanNode(scanNode: IScanNode, before?: Function, after?: Function) {
+  before && await before(scanNode);
+  for (let child of scanNode.children) {
+    await traverseScanNode(child, before, after);
+  }
+  after && await after(scanNode);
+}
+
+/** @ignore */
 function createScanNode(provider:object, context:IScanContext, parent:IScanNode | null): IScanNode {
   const name:string = NameMetadata.getMetadata(provider) || `anonymous-${++instanceNameId}`;
   const children:IScanNode[] = [];
@@ -24,6 +33,9 @@ function createScanNode(provider:object, context:IScanContext, parent:IScanNode 
     priority: ScanPriorityMetadata.getMetadata(provider),
     name,
     namePaths: NameMetadata.concatArrayNamePath(name, parent?.namePaths || null),
+    traverse: async function (before?: Function, after?: Function) {
+      await traverseScanNode(this, before, after)
+    }
   }
 
   for (const childProvider of ParentMetadata.getMetadata(provider)) {
