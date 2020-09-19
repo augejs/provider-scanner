@@ -16,7 +16,7 @@ export class ParentMetadata {
           parentResults.push(child);
         }
       }
-      Metadata.defineMetadata(ParentMetadata, parentResults, parentTarget);
+      Metadata.defineInsertEndArrayMetadata(ParentMetadata, parentResults, parentTarget);
     }
 
     iterateChildren(target, children, []);

@@ -9,7 +9,7 @@ describe('decorators: Provider', () => {
     class Y {};
     ParentMetadata.defineMetadata(Y, [{name:1},{name:2},{name:3}]);
     ParentMetadata.defineMetadata(Y, []);
-    expect(ParentMetadata.getMetadata(Y)).toEqual([]);
+    expect(ParentMetadata.getMetadata(Y)).toEqual([{name:1},{name:2},{name:3}]);
   })
 
   it('should Provider decorator has correctly many array value', () => {
