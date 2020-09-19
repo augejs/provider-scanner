@@ -38,5 +38,7 @@ export interface IScanNode {
   namePaths: string[], //[name, name, name]
   // namePath is the unique name path of scanNode
 
+  traverse: (before?: Function, after?: Function)=>void
+
   [prop: string]: any
 }
