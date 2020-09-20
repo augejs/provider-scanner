@@ -63,7 +63,7 @@ export async function scan(provider:object, options?:ScanOptions): Promise<IScan
   const rootScanNode:IScanNode = createScanNode(provider, context, null);
   context.rootScanNode = rootScanNode;
   const selfHook: Function =  options?.contextScanHook || hookUtil.noopHook;
-  const childrenHook: Function = hookUtil.traverseSProviderHook(rootScanNode, options?.scanNodeScanHook || hookUtil.noopHook);
+  const childrenHook: Function = hookUtil.traverseProviderHook(rootScanNode, options?.scanNodeScanHook || hookUtil.noopHook);
   await hookUtil.nestHooks([
     selfHook,
     childrenHook,

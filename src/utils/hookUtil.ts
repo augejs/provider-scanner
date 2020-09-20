@@ -71,10 +71,10 @@ interface ITreeNode {
   children: ITreeNode[]
 }
 
-export function traverseTreeHook(treeNode:ITreeNode, hook: Function):Function {
+export function traverseTreeNodeHook(treeNode:ITreeNode, hook: Function):Function {
   const childrenScanHook: Function = sequenceHooks(
     treeNode.children.map((childTreeNode:ITreeNode):Function => {
-      return traverseTreeHook(childTreeNode, hook);
+      return traverseTreeNodeHook(childTreeNode, hook);
     }))
 
   return bindHookContext(treeNode,
@@ -85,7 +85,7 @@ export function traverseTreeHook(treeNode:ITreeNode, hook: Function):Function {
   );
 }
 
-export function traverseSProviderHook(scanNode:IScanNode, hook: Function):Function {
+export function traverseProviderHook(scanNode:IScanNode, hook: Function):Function {
   const selfHook: Function = nestHooks(
     [
       nestHooks(HookMetadata.getMetadata(scanNode.provider)),
@@ -94,7 +94,7 @@ export function traverseSProviderHook(scanNode:IScanNode, hook: Function):Functi
 
   const childrenHook:Function = ChildrenHooksCompositeFunctionMetadata.getMetadata(scanNode.provider)(
     scanNode.children.map((childScanNode:IScanNode):Function => {
-      return traverseSProviderHook(childScanNode, hook);
+      return traverseProviderHook(childScanNode, hook);
     })
   );
 
