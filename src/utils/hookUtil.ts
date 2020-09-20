@@ -1,3 +1,6 @@
+import { IScanNode } from "../interfaces";
+import { ChildrenHooksCompositeFunctionMetadata, HookMetadata } from "../metadata";
+
 /** @ignore */
 export function ensureHooks(hooks: Function | Function[] | null):Function[] {
   if (hooks === null) return [];
@@ -39,7 +42,7 @@ export function nestHooks(hooks: Function | Function[] | null):Function {
  *
  * @category utils
  */
-export function sequenceHooks(hooks: Function | Function[] | null) {
+export function sequenceHooks(hooks: Function | Function[] | null):Function {
   const validHooks:Function[] = ensureHooks(hooks);
   return async function (context: any, next?:Function):Promise<any> {
     for(const hook of validHooks) {
@@ -54,7 +57,7 @@ export function sequenceHooks(hooks: Function | Function[] | null) {
  *
  * @category utils
  */
-export function parallelHooks(hooks: Function | Function[] | null) {
+export function parallelHooks(hooks: Function | Function[] | null): Function {
   const validHooks:Function[] = ensureHooks(hooks);
   return async function (context: any, next?:Function):Promise<any> {
     await Promise.all(validHooks.map((hook: Function) => {
@@ -62,6 +65,45 @@ export function parallelHooks(hooks: Function | Function[] | null) {
     }))
     !!next && await next(context);
   }
+}
+
+interface ITreeNode {
+  children: ITreeNode[]
+}
+
+export function traverseTreeHook(treeNode:ITreeNode, hook: Function):Function {
+  const childrenScanHook: Function = sequenceHooks(
+    treeNode.children.map((childTreeNode:ITreeNode):Function => {
+      return traverseTreeHook(childTreeNode, hook);
+    }))
+
+  return bindHookContext(treeNode,
+    nestHooks([
+      hook,
+      childrenScanHook,
+    ])
+  );
+}
+
+export function traverseSProviderHook(scanNode:IScanNode, hook: Function):Function {
+  const selfHook: Function = nestHooks(
+    [
+      nestHooks(HookMetadata.getMetadata(scanNode.provider)),
+      hook
+    ]);
+
+  const childrenHook:Function = ChildrenHooksCompositeFunctionMetadata.getMetadata(scanNode.provider)(
+    scanNode.children.map((childScanNode:IScanNode):Function => {
+      return traverseSProviderHook(childScanNode, hook);
+    })
+  );
+
+  return bindHookContext(scanNode,
+    nestHooks([
+      selfHook,
+      childrenHook,
+    ])
+  );
 }
 
 /**

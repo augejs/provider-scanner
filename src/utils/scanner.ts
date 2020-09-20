@@ -1,11 +1,9 @@
 import { IScanNode, IScanContext } from "../interfaces";
 import {
   ParentMetadata,
-  HookMetadata,
   ScanPriorityMetadata,
   ScanPrioritySortCompareMetadata,
   NameMetadata,
-  ChildrenHooksCompositeFunctionMetadata
 } from '../metadata';
 import * as hookUtil from './hookUtil';
 
@@ -34,41 +32,6 @@ function createScanNode(provider:object, context:IScanContext, parent:IScanNode 
   return scanNode;
 }
 
-export function createProviderScanHook(scanNode:IScanNode, scanHook: Function):Function {
-  const selfHook: Function = hookUtil.nestHooks(
-    [
-      hookUtil.nestHooks(HookMetadata.getMetadata(scanNode.provider)),
-      scanHook
-    ]);
-
-  const childrenHook:Function = ChildrenHooksCompositeFunctionMetadata.getMetadata(scanNode.provider)(
-    scanNode.children.map((childScanNode:IScanNode):Function => {
-      return createProviderScanHook(childScanNode, scanHook);
-    })
-  );
-
-  return hookUtil.bindHookContext(scanNode,
-    hookUtil.nestHooks([
-      selfHook,
-      childrenHook,
-    ])
-  );
-}
-
-export function createScanNodeScanHook(scanNode:IScanNode, scanHook: Function):Function {
-  const childrenScanHook: Function = hookUtil.sequenceHooks(
-    scanNode.children.map((childScanNode:IScanNode):Function => {
-      return createScanNodeScanHook(childScanNode, scanHook);
-    }))
-
-  return hookUtil.bindHookContext(scanNode,
-    hookUtil.nestHooks([
-      scanHook,
-      childrenScanHook,
-    ])
-  );
-}
-
 /**
  * start the scan process for the provider
  *
@@ -91,7 +54,7 @@ type ScanOptions = {
  */
 export async function scan(provider:object, options?:ScanOptions): Promise<IScanContext> {
   const context: IScanContext = {};
-
+  // set from the inputs.
   if (options?.inputs) {
     Object.entries(options?.inputs).forEach(([key, value]) => {
       context[key] = value;
@@ -100,7 +63,7 @@ export async function scan(provider:object, options?:ScanOptions): Promise<IScan
   const rootScanNode:IScanNode = createScanNode(provider, context, null);
   context.rootScanNode = rootScanNode;
   const selfHook: Function =  options?.contextScanHook || hookUtil.noopHook;
-  const childrenHook: Function = createProviderScanHook(rootScanNode, options?.scanNodeScanHook || hookUtil.noopHook);
+  const childrenHook: Function = hookUtil.traverseSProviderHook(rootScanNode, options?.scanNodeScanHook || hookUtil.noopHook);
   await hookUtil.nestHooks([
     selfHook,
     childrenHook,
