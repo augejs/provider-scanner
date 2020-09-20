@@ -1,7 +1,2 @@
-import * as hookUtil from './hookUtil';
-import { scan } from './scanner';
-
-export {
-  hookUtil,
-  scan,
-}
+export * as hookUtil from './hookUtil';
+export * from './scanner';
