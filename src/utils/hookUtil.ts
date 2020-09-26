@@ -99,8 +99,8 @@ export function traceTreeNodeHook(treeNode: ITreeNode, hook: Function): Function
 export function traverseProviderHook(scanNode:IScanNode, hook: Function):Function {
   const selfHook: Function = nestHooks(
     [
+      hook,
       nestHooks(HookMetadata.getMetadata(scanNode.provider)),
-      hook
     ]);
 
   const childrenHook:Function = ChildrenHooksCompositeFunctionMetadata.getMetadata(scanNode.provider)(
