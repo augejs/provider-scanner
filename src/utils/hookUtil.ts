@@ -68,11 +68,12 @@ export function parallelHooks(hooks: Function | Function[] | null): Function {
 }
 
 interface ITreeNode {
+  parent: ITreeNode | null
   children: ITreeNode[]
 }
 
 export function traverseTreeNodeHook(treeNode:ITreeNode, hook: Function):Function {
-  const childrenScanHook: Function = sequenceHooks(
+  const childrenHook: Function = sequenceHooks(
     treeNode.children.map((childTreeNode:ITreeNode):Function => {
       return traverseTreeNodeHook(childTreeNode, hook);
     }))
@@ -80,7 +81,17 @@ export function traverseTreeNodeHook(treeNode:ITreeNode, hook: Function):Functio
   return bindHookContext(treeNode,
     nestHooks([
       hook,
-      childrenScanHook,
+      childrenHook,
+    ])
+  );
+}
+
+export function traceTreeNodeHook(treeNode: ITreeNode, hook: Function): Function {
+  const parentHook: Function = treeNode.parent ? traceTreeNodeHook(treeNode.parent, hook) : noopHook;
+  return bindHookContext(treeNode,
+    nestHooks([
+      hook,
+      parentHook,
     ])
   );
 }
@@ -111,7 +122,7 @@ export function traverseProviderHook(scanNode:IScanNode, hook: Function):Functio
  *
  * @category utils
  */
-export function bindHookContext(targetContext: any, hook: Function) {
+export function bindHookContext(targetContext: any, hook: Function): Function {
   return async function (context: any, next?:Function):Promise<any> {
     await hook(targetContext);
     !!next && await next(context);
