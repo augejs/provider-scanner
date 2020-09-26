@@ -4,6 +4,7 @@ import {
   ScanPriorityMetadata,
   ScanPrioritySortCompareMetadata,
   NameMetadata,
+  HookMetadata,
 } from '../metadata';
 import * as hookUtil from './hookUtil';
 
@@ -62,10 +63,18 @@ export async function scan(provider:object, options?:ScanOptions): Promise<IScan
   }
   const rootScanNode:IScanNode = createScanNode(provider, context, null);
   context.rootScanNode = rootScanNode;
-  const selfHook: Function =  options?.contextScanHook || hookUtil.noopHook;
-  const childrenHook: Function = hookUtil.traverseProviderHook(rootScanNode, options?.scanNodeScanHook || hookUtil.noopHook);
+  const selfHooks: Function[] =  hookUtil.ensureHooks(options?.contextScanHook || null);
+  const childrenHook: Function = hookUtil.traverseTreeNodeHook(
+    rootScanNode,
+    (scanNode: IScanNode): Function[] =>{
+      return [
+        options?.scanNodeScanHook || hookUtil.noopHook,
+      ...HookMetadata.getMetadata(scanNode.provider)
+      ]
+    }, hookUtil.nestHooks);
+
   await hookUtil.nestHooks([
-    selfHook,
+    ...selfHooks,
     childrenHook,
   ])(context);
 

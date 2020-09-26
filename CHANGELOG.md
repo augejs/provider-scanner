@@ -1,4 +1,4 @@
-## 0.0.38 (2020-09-26)
+## 0.0.39 (2020-09-27)
 
 
 ### Bug Fixes
@@ -8,6 +8,7 @@
 * add trace tree node hook ([94bfd79](https://github.com/augejs/provider-scanner/commit/94bfd794d70c824c6edb9861b54a9d2b21a11410))
 * fix add get metadata ([1494f3b](https://github.com/augejs/provider-scanner/commit/1494f3bf051c2d294f938c773a986f4e8cc4a3d9))
 * fix add get metadata ([7d817a2](https://github.com/augejs/provider-scanner/commit/7d817a2671450bb112ffa301f59997d4fd7972d7))
+* fix the traverse tree node ([fabc696](https://github.com/augejs/provider-scanner/commit/fabc69621c3eaa73ebe246620ffb8758cf1b36a8))
 * parent-metadata extends ability ([746e97c](https://github.com/augejs/provider-scanner/commit/746e97c446543cb9a467716aaf7ac63111bdb371))
 * refactor scan ([cff7eb2](https://github.com/augejs/provider-scanner/commit/cff7eb2dbefe022bf1ef797d1c5c3266106aa030))
 * rm the name path from scan node ([c3851cb](https://github.com/augejs/provider-scanner/commit/c3851cbaa82410f0df3eb5029b0d4348e62289d9))

@@ -1,10 +1,14 @@
-import { IScanNode } from "../interfaces";
-import { ChildrenHooksCompositeFunctionMetadata, HookMetadata } from "../metadata";
-
 /** @ignore */
 export function ensureHooks(hooks: Function | Function[] | null):Function[] {
-  if (hooks === null) return [];
-  return Array.isArray(hooks) ? (hooks as Function[]) : [ hooks ]
+  if (!hooks) return [];
+
+  if (Array.isArray(hooks)) {
+    return hooks as Function[];
+  } else if (typeof hooks === 'function') {
+    return [ hooks ];
+  }
+
+  return [];
 }
 
 /** @ignore */
@@ -19,6 +23,7 @@ export async function noopHook(context: any, next?: Function) {
  */
 export function nestHooks(hooks: Function | Function[] | null):Function {
   const validHooks:Function[] = ensureHooks(hooks);
+
   return function (context: any, next?:Function):Promise<any> {
     let index:number = -1;
     function dispatch (i:any): Promise<any> {
@@ -37,6 +42,11 @@ export function nestHooks(hooks: Function | Function[] | null):Function {
   }
 }
 
+export function nestReversedHooks(hooks: Function | Function[] | null) {
+  const validHooks:Function[] = ensureHooks(hooks).reverse();
+  return nestHooks(validHooks);
+}
+
 /**
  * sequencing the hooks
  *
@@ -50,6 +60,11 @@ export function sequenceHooks(hooks: Function | Function[] | null):Function {
     }
     !!next && await next(context);
   }
+}
+
+export function sequenceReversedHooks(hooks: Function | Function[] | null) {
+  const validHooks:Function[] = ensureHooks(hooks).reverse();
+  return sequenceHooks(validHooks);
 }
 
 /**
@@ -67,52 +82,45 @@ export function parallelHooks(hooks: Function | Function[] | null): Function {
   }
 }
 
+export function parallelReversedHooks(hooks: Function | Function[] | null) {
+  const validHooks:Function[] = ensureHooks(hooks).reverse();
+  return sequenceHooks(validHooks);
+}
+
 interface ITreeNode {
   parent: ITreeNode | null
   children: ITreeNode[]
 }
 
-export function traverseTreeNodeHook(treeNode:ITreeNode, hook: Function):Function {
+export function traverseTreeNodeHook(
+  treeNode:ITreeNode,
+  factory: Function,
+  hooksComposite: Function
+  ):Function {
   const childrenHook: Function = sequenceHooks(
     treeNode.children.map((childTreeNode:ITreeNode):Function => {
-      return traverseTreeNodeHook(childTreeNode, hook);
-    }))
+      return traverseTreeNodeHook(childTreeNode, factory, hooksComposite);
+  }));
 
+  const selfHooks: Function[] = ensureHooks(factory(treeNode) || null);
   return bindHookContext(treeNode,
-    nestHooks([
-      hook,
+    hooksComposite([
+      ...selfHooks,
       childrenHook,
     ])
   );
 }
 
-export function traceTreeNodeHook(treeNode: ITreeNode, hook: Function): Function {
-  const parentHook: Function = treeNode.parent ? traceTreeNodeHook(treeNode.parent, hook) : noopHook;
+export function traceTreeNodeHook(
+  treeNode: ITreeNode,
+  factory: Function,
+  hooksComposite: Function): Function {
+  let selfHooks: Function[] = ensureHooks(factory && factory(treeNode) || null);
+  const parentHook: Function = treeNode.parent ? traceTreeNodeHook(treeNode.parent, factory, hooksComposite) : noopHook;
   return bindHookContext(treeNode,
-    nestHooks([
-      hook,
+    hooksComposite([
+      ...selfHooks,
       parentHook,
-    ])
-  );
-}
-
-export function traverseProviderHook(scanNode:IScanNode, hook: Function):Function {
-  const selfHook: Function = nestHooks(
-    [
-      hook,
-      nestHooks(HookMetadata.getMetadata(scanNode.provider)),
-    ]);
-
-  const childrenHook:Function = ChildrenHooksCompositeFunctionMetadata.getMetadata(scanNode.provider)(
-    scanNode.children.map((childScanNode:IScanNode):Function => {
-      return traverseProviderHook(childScanNode, hook);
-    })
-  );
-
-  return bindHookContext(scanNode,
-    nestHooks([
-      selfHook,
-      childrenHook,
     ])
   );
 }
