@@ -1,9 +1,14 @@
+import { IScanNode } from "../interfaces";
+
+export type HookFunction = (context: any, next?: any) => Promise<any|void>;
+export type ComposeHooksFunction = (hooks: HookFunction | HookFunction[] | null) => HookFunction;
+
 /** @ignore */
-export function ensureHooks(hooks: Function | Function[] | null):Function[] {
+export function ensureHooks(hooks: HookFunction | HookFunction[] | null):HookFunction[] {
   if (!hooks) return [];
 
   if (Array.isArray(hooks)) {
-    return hooks as Function[];
+    return hooks as HookFunction[];
   } else if (typeof hooks === 'function') {
     return [ hooks ];
   }
@@ -21,7 +26,7 @@ export async function noopHook(context: any, next?: Function) {
  *
  * @category utils
  */
-export function nestHooks(hooks: Function | Function[] | null):Function {
+export function nestHooks(hooks: HookFunction | HookFunction[] | null):HookFunction {
   const validHooks:Function[] = ensureHooks(hooks);
 
   return function (context: any, next?:Function):Promise<any> {
@@ -42,9 +47,8 @@ export function nestHooks(hooks: Function | Function[] | null):Function {
   }
 }
 
-export function nestReversedHooks(hooks: Function | Function[] | null) {
-  const validHooks:Function[] = ensureHooks(hooks).reverse();
-  return nestHooks(validHooks);
+export function nestReversedHooks(hooks: HookFunction | HookFunction[] | null) {
+  return nestHooks(ensureHooks(hooks).reverse());
 }
 
 /**
@@ -52,8 +56,8 @@ export function nestReversedHooks(hooks: Function | Function[] | null) {
  *
  * @category utils
  */
-export function sequenceHooks(hooks: Function | Function[] | null):Function {
-  const validHooks:Function[] = ensureHooks(hooks);
+export function sequenceHooks(hooks: HookFunction | HookFunction[] | null):HookFunction {
+  const validHooks:HookFunction[] = ensureHooks(hooks);
   return async function (context: any, next?:Function):Promise<any> {
     for(const hook of validHooks) {
       await hook(context, noopHook);
@@ -62,9 +66,8 @@ export function sequenceHooks(hooks: Function | Function[] | null):Function {
   }
 }
 
-export function sequenceReversedHooks(hooks: Function | Function[] | null) {
-  const validHooks:Function[] = ensureHooks(hooks).reverse();
-  return sequenceHooks(validHooks);
+export function sequenceReversedHooks(hooks: HookFunction | HookFunction[] | null): HookFunction {
+  return sequenceHooks(ensureHooks(hooks).reverse());
 }
 
 /**
@@ -72,7 +75,7 @@ export function sequenceReversedHooks(hooks: Function | Function[] | null) {
  *
  * @category utils
  */
-export function parallelHooks(hooks: Function | Function[] | null): Function {
+export function parallelHooks(hooks: HookFunction | HookFunction[] | null): HookFunction {
   const validHooks:Function[] = ensureHooks(hooks);
   return async function (context: any, next?:Function):Promise<any> {
     await Promise.all(validHooks.map((hook: Function) => {
@@ -82,29 +85,22 @@ export function parallelHooks(hooks: Function | Function[] | null): Function {
   }
 }
 
-export function parallelReversedHooks(hooks: Function | Function[] | null) {
-  const validHooks:Function[] = ensureHooks(hooks).reverse();
-  return sequenceHooks(validHooks);
+export function parallelReversedHooks(hooks: HookFunction | HookFunction[] | null) {
+  return sequenceHooks(ensureHooks(hooks).reverse());
 }
 
-interface ITreeNode {
-  parent: ITreeNode | null
-  children: ITreeNode[]
-}
-
-export function traverseTreeNodeHook(
-  treeNode:ITreeNode,
-  factory: Function,
-  hooksComposite: Function
-  ):Function {
-  const childrenHook: Function = sequenceHooks(
-    treeNode.children.map((childTreeNode:ITreeNode):Function => {
-      return traverseTreeNodeHook(childTreeNode, factory, hooksComposite);
+export function traverseScanNodeHook(
+  scanNode: IScanNode,
+  factory: (scanNode: IScanNode) => HookFunction | HookFunction[] | null,
+  composeHooksFunction: ComposeHooksFunction):HookFunction {
+  const childrenHook: HookFunction = sequenceHooks(
+    scanNode.children.map((childScanNode:IScanNode):HookFunction => {
+      return traverseScanNodeHook(childScanNode, factory, composeHooksFunction);
   }));
 
-  const selfHooks: Function[] = ensureHooks(factory(treeNode) || null);
-  return bindHookContext(treeNode,
-    hooksComposite([
+  const selfHooks: HookFunction[] = ensureHooks(factory(scanNode) || null);
+  return bindHookContext(scanNode,
+    composeHooksFunction([
       ...selfHooks,
       childrenHook,
     ])
@@ -112,13 +108,13 @@ export function traverseTreeNodeHook(
 }
 
 export function traceTreeNodeHook(
-  treeNode: ITreeNode,
-  factory: Function,
-  hooksComposite: Function): Function {
-  let selfHooks: Function[] = ensureHooks(factory && factory(treeNode) || null);
-  const parentHook: Function = treeNode.parent ? traceTreeNodeHook(treeNode.parent, factory, hooksComposite) : noopHook;
-  return bindHookContext(treeNode,
-    hooksComposite([
+  scanNode: IScanNode,
+  factory: (scanNode: IScanNode) => HookFunction | HookFunction[] | null,
+  composeHooksFunction: ComposeHooksFunction): HookFunction {
+  const selfHooks: HookFunction[] = ensureHooks(factory && factory(scanNode) || null);
+  const parentHook: HookFunction = scanNode.parent ? traceTreeNodeHook(scanNode.parent, factory, composeHooksFunction) : noopHook;
+  return bindHookContext(scanNode,
+    composeHooksFunction([
       ...selfHooks,
       parentHook,
     ])
@@ -130,11 +126,25 @@ export function traceTreeNodeHook(
  *
  * @category utils
  */
-export function bindHookContext(targetContext: any, hook: Function): Function {
+export function bindHookContext(targetContext: any, hook: HookFunction): HookFunction {
   return async function (context: any, next?:Function):Promise<any> {
     await hook(targetContext);
     !!next && await next(context);
   }
 }
+
+export function conditionHook(
+  condition: (context: any) => boolean,
+  hook: HookFunction): HookFunction {
+  return async function (context: any, next?:Function):Promise<any> {
+    if (!condition(context)) {
+      return next && await next();
+    }
+
+    return await hook(context, next);
+  }
+}
+
+
 
 

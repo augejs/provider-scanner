@@ -37,7 +37,7 @@ describe('decorators: ScanPriority', () => {
       fn('5-2');
     })
 
-    await hookUtil.nestHooks(HookMetadata.getMetadata(A))();
+    await hookUtil.nestHooks(HookMetadata.getMetadata(A))(null);
 
     expect(fn.mock.calls).toEqual([
       ['1-1'],

@@ -6,6 +6,7 @@ import {
   NameMetadata,
   HookMetadata,
 } from '../metadata';
+
 import * as hookUtil from './hookUtil';
 
 /** @ignore */
@@ -44,8 +45,8 @@ function createScanNode(provider:object, context:IScanContext, parent:IScanNode 
  */
 type ScanOptions = {
   inputs?: object,
-  contextScanHook?: Function,
-  scanNodeScanHook?: Function
+  contextScanHook?: hookUtil.HookFunction,
+  scanNodeScanHook?: hookUtil.HookFunction
 }
 
 /**
@@ -63,10 +64,10 @@ export async function scan(provider:object, options?:ScanOptions): Promise<IScan
   }
   const rootScanNode:IScanNode = createScanNode(provider, context, null);
   context.rootScanNode = rootScanNode;
-  const selfHooks: Function[] =  hookUtil.ensureHooks(options?.contextScanHook || null);
-  const childrenHook: Function = hookUtil.traverseTreeNodeHook(
+  const selfHooks = hookUtil.ensureHooks(options?.contextScanHook || null);
+  const childrenHook = hookUtil.traverseScanNodeHook(
     rootScanNode,
-    (scanNode: IScanNode): Function[] =>{
+    (scanNode: IScanNode): hookUtil.HookFunction[] => {
       return [
         options?.scanNodeScanHook || hookUtil.noopHook,
       ...HookMetadata.getMetadata(scanNode.provider)
