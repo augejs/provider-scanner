@@ -79,8 +79,10 @@
 						<section class="tsd-index-section ">
 							<h3>Other Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_hookutil_.html#nestreversedhooks" class="tsd-kind-icon">nest<wbr>Reversed<wbr>Hooks</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_hookutil_.html#parallelreversedhooks" class="tsd-kind-icon">parallel<wbr>Reversed<wbr>Hooks</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_hookutil_.html#sequencereversedhooks" class="tsd-kind-icon">sequence<wbr>Reversed<wbr>Hooks</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_hookutil_.html#tracetreenodehook" class="tsd-kind-icon">trace<wbr>Tree<wbr>Node<wbr>Hook</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_hookutil_.html#traverseproviderhook" class="tsd-kind-icon">traverse<wbr>Provider<wbr>Hook</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_utils_hookutil_.html#traversetreenodehook" class="tsd-kind-icon">traverse<wbr>Tree<wbr>Node<wbr>Hook</a></li>
 							</ul>
 							<h3>utils Functions</h3>
@@ -97,16 +99,85 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Other Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="tracetreenodehook" class="tsd-anchor"></a>
-					<h3>trace<wbr>Tree<wbr>Node<wbr>Hook</h3>
+					<a name="nestreversedhooks" class="tsd-anchor"></a>
+					<h3>nest<wbr>Reversed<wbr>Hooks</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">trace<wbr>Tree<wbr>Node<wbr>Hook<span class="tsd-signature-symbol">(</span>treeNode<span class="tsd-signature-symbol">: </span><a href="../interfaces/_utils_hookutil_.itreenode.html" class="tsd-signature-type">ITreeNode</a>, hook<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span></li>
+						<li class="tsd-signature tsd-kind-icon">nest<wbr>Reversed<wbr>Hooks<span class="tsd-signature-symbol">(</span>hooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/cfca3ab/src/utils/hookUtil.ts#L89">utils/hookUtil.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/213c8fa/src/utils/hookUtil.ts#L45">utils/hookUtil.ts:45</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>hooks: <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Function</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="parallelreversedhooks" class="tsd-anchor"></a>
+					<h3>parallel<wbr>Reversed<wbr>Hooks</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">parallel<wbr>Reversed<wbr>Hooks<span class="tsd-signature-symbol">(</span>hooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/213c8fa/src/utils/hookUtil.ts#L85">utils/hookUtil.ts:85</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>hooks: <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Function</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="sequencereversedhooks" class="tsd-anchor"></a>
+					<h3>sequence<wbr>Reversed<wbr>Hooks</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">sequence<wbr>Reversed<wbr>Hooks<span class="tsd-signature-symbol">(</span>hooks<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/213c8fa/src/utils/hookUtil.ts#L65">utils/hookUtil.ts:65</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>hooks: <span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Function</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="tracetreenodehook" class="tsd-anchor"></a>
+					<h3>trace<wbr>Tree<wbr>Node<wbr>Hook</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">trace<wbr>Tree<wbr>Node<wbr>Hook<span class="tsd-signature-symbol">(</span>treeNode<span class="tsd-signature-symbol">: </span><a href="../interfaces/_utils_hookutil_.itreenode.html" class="tsd-signature-type">ITreeNode</a>, factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span>, hooksComposite<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/213c8fa/src/utils/hookUtil.ts#L114">utils/hookUtil.ts:114</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -115,33 +186,10 @@
 									<h5>treeNode: <a href="../interfaces/_utils_hookutil_.itreenode.html" class="tsd-signature-type">ITreeNode</a></h5>
 								</li>
 								<li>
-									<h5>hook: <span class="tsd-signature-type">Function</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Function</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="traverseproviderhook" class="tsd-anchor"></a>
-					<h3>traverse<wbr>Provider<wbr>Hook</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">traverse<wbr>Provider<wbr>Hook<span class="tsd-signature-symbol">(</span>scanNode<span class="tsd-signature-symbol">: </span><a href="../interfaces/_interfaces_iscannode_.iscannode.html" class="tsd-signature-type">IScanNode</a>, hook<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/cfca3ab/src/utils/hookUtil.ts#L99">utils/hookUtil.ts:99</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>scanNode: <a href="../interfaces/_interfaces_iscannode_.iscannode.html" class="tsd-signature-type">IScanNode</a></h5>
+									<h5>factory: <span class="tsd-signature-type">Function</span></h5>
 								</li>
 								<li>
-									<h5>hook: <span class="tsd-signature-type">Function</span></h5>
+									<h5>hooksComposite: <span class="tsd-signature-type">Function</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Function</span></h4>
@@ -152,13 +200,13 @@
 					<a name="traversetreenodehook" class="tsd-anchor"></a>
 					<h3>traverse<wbr>Tree<wbr>Node<wbr>Hook</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">traverse<wbr>Tree<wbr>Node<wbr>Hook<span class="tsd-signature-symbol">(</span>treeNode<span class="tsd-signature-symbol">: </span><a href="../interfaces/_utils_hookutil_.itreenode.html" class="tsd-signature-type">ITreeNode</a>, hook<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span></li>
+						<li class="tsd-signature tsd-kind-icon">traverse<wbr>Tree<wbr>Node<wbr>Hook<span class="tsd-signature-symbol">(</span>treeNode<span class="tsd-signature-symbol">: </span><a href="../interfaces/_utils_hookutil_.itreenode.html" class="tsd-signature-type">ITreeNode</a>, factory<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span>, hooksComposite<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/cfca3ab/src/utils/hookUtil.ts#L75">utils/hookUtil.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/213c8fa/src/utils/hookUtil.ts#L95">utils/hookUtil.ts:95</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -167,7 +215,10 @@
 									<h5>treeNode: <a href="../interfaces/_utils_hookutil_.itreenode.html" class="tsd-signature-type">ITreeNode</a></h5>
 								</li>
 								<li>
-									<h5>hook: <span class="tsd-signature-type">Function</span></h5>
+									<h5>factory: <span class="tsd-signature-type">Function</span></h5>
+								</li>
+								<li>
+									<h5>hooksComposite: <span class="tsd-signature-type">Function</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Function</span></h4>
@@ -187,7 +238,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/cfca3ab/src/utils/hookUtil.ts#L125">utils/hookUtil.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/213c8fa/src/utils/hookUtil.ts#L133">utils/hookUtil.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -218,7 +269,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/cfca3ab/src/utils/hookUtil.ts#L20">utils/hookUtil.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/213c8fa/src/utils/hookUtil.ts#L24">utils/hookUtil.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -246,7 +297,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/cfca3ab/src/utils/hookUtil.ts#L60">utils/hookUtil.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/213c8fa/src/utils/hookUtil.ts#L75">utils/hookUtil.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -274,7 +325,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/cfca3ab/src/utils/hookUtil.ts#L45">utils/hookUtil.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/augejs/provider-scanner/blob/213c8fa/src/utils/hookUtil.ts#L55">utils/hookUtil.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -338,16 +389,22 @@
 						<a href="_utils_hookutil_.html#nesthooks" class="tsd-kind-icon">nest<wbr>Hooks</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_utils_hookutil_.html#nestreversedhooks" class="tsd-kind-icon">nest<wbr>Reversed<wbr>Hooks</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_utils_hookutil_.html#parallelhooks" class="tsd-kind-icon">parallel<wbr>Hooks</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_utils_hookutil_.html#parallelreversedhooks" class="tsd-kind-icon">parallel<wbr>Reversed<wbr>Hooks</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_utils_hookutil_.html#sequencehooks" class="tsd-kind-icon">sequence<wbr>Hooks</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_utils_hookutil_.html#tracetreenodehook" class="tsd-kind-icon">trace<wbr>Tree<wbr>Node<wbr>Hook</a>
+						<a href="_utils_hookutil_.html#sequencereversedhooks" class="tsd-kind-icon">sequence<wbr>Reversed<wbr>Hooks</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_utils_hookutil_.html#traverseproviderhook" class="tsd-kind-icon">traverse<wbr>Provider<wbr>Hook</a>
+						<a href="_utils_hookutil_.html#tracetreenodehook" class="tsd-kind-icon">trace<wbr>Tree<wbr>Node<wbr>Hook</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module">
 						<a href="_utils_hookutil_.html#traversetreenodehook" class="tsd-kind-icon">traverse<wbr>Tree<wbr>Node<wbr>Hook</a>
