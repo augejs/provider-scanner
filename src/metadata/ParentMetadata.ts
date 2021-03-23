@@ -1,15 +1,16 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { Metadata } from './Metadata';
 export class ParentMetadata {
   /**
    * define the metadata of children
    */
-  static defineMetadata(target:object, children: any[]):void {
-    function iterateChildren(parentTarget:any, children: any[], parentResults: any[]) {
-      let currentParentTarget:any = parentTarget;
-      let results:any = parentResults;
+  static defineMetadata(target:object, children: object[]):void {
+    function iterateChildren(parentTarget:object, children: object[], parentResults: object[]) {
+      let currentParentTarget:object = parentTarget;
+      let results:object[] = parentResults;
       for(const child of children) {
-        if (Array.isArray(child) && (child as any[]).length > 0) {
-          iterateChildren(currentParentTarget, child as any[], results);
+        if (Array.isArray(child) && (child as object[]).length > 0) {
+          iterateChildren(currentParentTarget, child as object[], results);
         } else {
           currentParentTarget = child;
           results = [];
@@ -23,6 +24,6 @@ export class ParentMetadata {
   }
 
   static getMetadata(target:object):object[] {
-    return Metadata.getMetadata(ParentMetadata, target) || [];
+    return Metadata.getMetadata(ParentMetadata, target) as object[] ?? [];
   }
 }

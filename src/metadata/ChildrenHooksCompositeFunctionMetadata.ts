@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/ban-types */
+import { HookFunction, sequenceHooks } from '../utils/hookUtil';
 import { Metadata } from './Metadata';
-import { hookUtil } from '../utils';
 
 /** @ignore */
 export class ChildrenHooksCompositeFunctionMetadata {
-  static defineMetadata(target: object, fn: Function):void {
+  static defineMetadata(target: unknown, fn: HookFunction):void {
     return Metadata.defineMetadata(ChildrenHooksCompositeFunctionMetadata, target, fn);
   }
 
-  static getMetadata(target: object): Function {
-    return Metadata.getMetadata(ChildrenHooksCompositeFunctionMetadata, target) || hookUtil.sequenceHooks;
+  static getMetadata(target: object): HookFunction {
+    return Metadata.getMetadata(ChildrenHooksCompositeFunctionMetadata, target) as HookFunction ?? sequenceHooks;
   }
 }

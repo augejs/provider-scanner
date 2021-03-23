@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { IScanNode, IScanContext } from "../interfaces";
 import {
   ParentMetadata,
@@ -10,7 +11,7 @@ import {
 import * as hookUtil from './hookUtil';
 
 /** @ignore */
-let instanceNameId:number = 0;
+let instanceNameId = 0;
 
 /** @ignore */
 function createScanNode(provider:object, context:IScanContext, parent:IScanNode | null): IScanNode {
@@ -44,7 +45,7 @@ function createScanNode(provider:object, context:IScanContext, parent:IScanNode 
  * @category utils
  */
 type ScanOptions = {
-  inputs?: object,
+  inputs?: Record<string, unknown>,
   contextScanHook?: hookUtil.HookFunction,
   scanNodeScanHook?: hookUtil.HookFunction
 }

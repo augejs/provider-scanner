@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { NameMetadata } from './NameMetadata';
 
 describe('decorators: Name', () => {
@@ -5,10 +6,10 @@ describe('decorators: Name', () => {
     const A = {
       name: 'a'
     };
-    const B = {};
-    const C = {};
-    const D = ()=>{};
-    class E {};
+
+    const C = {}
+    const D = ()=>{}
+    class E {}
 
     NameMetadata.defineMetadata(A);
     expect(NameMetadata.getMetadata(A)).toBe('a');
@@ -30,7 +31,7 @@ describe('decorators: Name', () => {
 
 describe('utils: name getFunctionLowerCaseName', () => {
   it('should have correct function lower cause name', () => {
-    function AA() {};
+    function AA() {}
     expect(NameMetadata.getLowerCaseName(AA.name)).toBe('aA');
   })
 })

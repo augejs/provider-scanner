@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { IScanContext } from './IScanContext';
 
 /**
@@ -10,20 +11,20 @@ export interface IScanNode {
   /**
    * the context of scan node
    */
-  context: IScanContext,
+  context: IScanContext
   /**
    * the provider of scan node
    */
-  provider: object,
+  provider: object
 
   /**
    * the children scan nodes of current scan node
    */
-  children: IScanNode[],
+  children: IScanNode[]
   /**
    * the parent scan node of current scan node
    */
-  parent: IScanNode | null,
+  parent: IScanNode | null
   /**
    * the sort priority of current scan node
    */
@@ -38,7 +39,7 @@ export interface IScanNode {
   /**
    * namePath is the unique name path of scanNode
    */
-  namePaths: string[], //[name, name, name]
+  namePaths: string[] //[name, name, name]
 
-  [prop: string]: any
+  [prop: string]: unknown
 }

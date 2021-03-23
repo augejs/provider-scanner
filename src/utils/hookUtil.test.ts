@@ -1,17 +1,19 @@
 import * as hookUtil from './hookUtil';
+import { HookFunction } from './hookUtil';
 
 describe('utils: compositeHook', () => {
   it('composite nest hook should have correct execute order', async ()=> {
     const fn = jest.fn();
-    const result = await hookUtil.nestHooks([
-      async (_:null, next:Function) => {
+
+    await hookUtil.nestHooks([
+      async (_:unknown, next?:CallableFunction) => {
         fn(1);
-        await next();
+        next && await next();
         fn(4);
       },
-      async (_:null, next:Function) => {
+      async (_:unknown, next?:CallableFunction) => {
         fn(2);
-        await next();
+        next && await next();
         fn(3);
       }
     ])(null);
@@ -20,12 +22,12 @@ describe('utils: compositeHook', () => {
 
   it('composite sequence should have correct execute order', async ()=> {
     const fn = jest.fn();
-    const result = await hookUtil.sequenceHooks([
-      async (_:null) => {
+    await hookUtil.sequenceHooks([
+      async () => {
         fn(1);
         fn(2);
       },
-      async (_:null) => {
+      async () => {
         fn(3);
         fn(4);
       }
@@ -36,52 +38,52 @@ describe('utils: compositeHook', () => {
   it('compose mixin hooks should have correct execute order', async ()=> {
     const fn = jest.fn();
 
-    const hook:Function = hookUtil.nestHooks(
+    const hook:HookFunction = hookUtil.nestHooks(
       [
-        async (_:null, next:Function) => {
+        async (_:unknown, next?:CallableFunction) => {
           fn(1);
-          await next();
+          next && await next();
           fn(12);
         },
 
         hookUtil.sequenceHooks([
-          async (_:null) => {
+          async () => {
             fn(2);
           },
-          async (_:null) => {
+          async () => {
             fn(3);
           }
         ]),
 
-        async (_:null, next:Function) => {
+        async (_:unknown, next?:CallableFunction) => {
           fn(4);
-          await next();
+          next && await next();
           fn(11);
         },
 
         hookUtil.sequenceHooks([
-          async (_:null) => {
+          async () => {
             fn(5);
           },
 
           hookUtil.nestHooks([
-            async (_:null, next:Function) => {
+            async (_:unknown, next?:CallableFunction) => {
               fn(6);
-              await next();
+              next && await next();
               fn(9);
             },
 
             hookUtil.sequenceHooks([
-              async (_:null) => {
+              async () => {
                 fn(7);
               },
-              async (_:null) => {
+              async () => {
                 fn(8);
               }
             ]),
           ]),
 
-          async (_:null) => {
+          async () => {
             fn(10);
           },
         ]),
