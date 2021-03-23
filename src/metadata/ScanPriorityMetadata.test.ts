@@ -32,7 +32,7 @@ describe('decorators: ScanPriority', () => {
   })
 
   it('should higher priority number means higher priority ', () => {
-    let scanNodes:IScanNode[] = [
+    const scanNodes:IScanNode[] = [
       createScanNode(1),
       createScanNode(5),
       createScanNode(2),

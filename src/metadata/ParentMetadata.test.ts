@@ -2,22 +2,28 @@ import { ParentMetadata } from './ParentMetadata';
 
 describe('decorators: Provider', () => {
   it('should Provider decorator has correctly value', () => {
-    class Z {};
+    class Z {}
     ParentMetadata.defineMetadata(Z, [{name:1},{name:2},{name:3}])
     expect(ParentMetadata.getMetadata(Z)).toEqual([{name:1},{name:2},{name:3}]);
 
-    class Y {};
+    class Y {}
     ParentMetadata.defineMetadata(Y, [{name:1},{name:2},{name:3}]);
     ParentMetadata.defineMetadata(Y, []);
     expect(ParentMetadata.getMetadata(Y)).toEqual([{name:1},{name:2},{name:3}]);
   })
 
   it('should Provider decorator has correctly many array value', () => {
-    class X {};
+    class X {}
 
-    class A {};
-    class A_1 {};class A_2 {};class A_3 {};class A_4 {};
-    class A_5 {};class A_6 {};class A_7 {};class A_8 {};
+    class A {}
+    class A_1 {}
+    class A_2 {}
+    class A_3 {}
+    class A_4 {}
+    class A_5 {}
+    class A_6 {}
+    class A_7 {}
+    class A_8 {}
 
     ParentMetadata.defineMetadata(X, [
       A,
@@ -36,11 +42,17 @@ describe('decorators: Provider', () => {
   })
 
   it('should Provider decorator has correctly deep array value', () => {
-    class X {};
+    class X {}
 
-    class A_1 {};class A_2 {};class A_3 {};class A_4 {};
-    class A_5 {};class A_6 {};class A_7 {};class A_8 {};
-    class A_9 {};
+    class A_1 {}
+    class A_2 {}
+    class A_3 {}
+    class A_4 {}
+    class A_5 {}
+    class A_6 {}
+    class A_7 {}
+    class A_8 {}
+    class A_9 {}
 
     ParentMetadata.defineMetadata(X, [
       [
@@ -82,24 +94,24 @@ describe('decorators: Provider', () => {
   })
 
   it('should Provider decorator has correctly composite value', () => {
-    class X {};
-    class A {};
+    class X {}
+    class A {}
 
-    class A_1 {};class A_2 {};class A_3 {};class A_4 {};
-    class A_5 {};class A_6 {};class A_7 {};class A_8 {};
+    class A_1 {} class A_2 {} class A_3 {} class A_4 {}
+    class A_5 {} class A_6 {} class A_7 {} class A_8 {}
 
-    class B {};
-    class C {};
+    class B {}
+    class C {}
 
-    class C_1 {};
-    class C_1_1 {};class C_1_2 {};
-    class C_2{};class C_3{};
+    class C_1 {}
+    class C_1_1 {} class C_1_2 {}
+    class C_2{} class C_3{}
 
-    class C_7 {};
-    class D {};
-    class D_1 {};class D_2 {};class D_2_1 {};class D_2_2 {};
-    class D_2_3 {}; class D_2_4 {};class D_2_5 {};class D_2_6 {};
-    class D_3 {};
+    class C_7 {}
+    class D {}
+    class D_1 {} class D_2 {} class D_2_1 {} class D_2_2 {}
+    class D_2_3 {} class D_2_4 {} class D_2_5 {} class D_2_6 {}
+    class D_3 {}
 
     ParentMetadata.defineMetadata(X, [
       A,

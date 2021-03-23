@@ -1,6 +1,7 @@
+
 import { IScanNode } from "../interfaces";
 
-export type HookFunction = (context: any, next?: any) => Promise<any|void>;
+export type HookFunction = (context: unknown, next?: CallableFunction) => Promise<unknown>;
 export type ComposeHooksFunction = (hooks: HookFunction | HookFunction[] | null) => HookFunction;
 
 /** @ignore */
@@ -17,7 +18,7 @@ export function ensureHooks(hooks: HookFunction | HookFunction[] | null):HookFun
 }
 
 /** @ignore */
-export async function noopHook(context: any, next?: Function) {
+export async function noopHook(context: unknown, next?: CallableFunction):Promise<void> {
   !!next && await next(context);
 }
 
@@ -27,14 +28,14 @@ export async function noopHook(context: any, next?: Function) {
  * @category utils
  */
 export function nestHooks(hooks: HookFunction | HookFunction[] | null):HookFunction {
-  const validHooks:Function[] = ensureHooks(hooks);
+  const validHooks:CallableFunction[] = ensureHooks(hooks);
 
-  return function (context: any, next?:Function):Promise<any> {
-    let index:number = -1;
-    function dispatch (i:any): Promise<any> {
+  return function (context: unknown, next?:CallableFunction):Promise<unknown> {
+    let index = -1;
+    function dispatch (i:number): Promise<unknown> {
       if (i <= index) return Promise.reject(new Error('next() called multiple times'))
       index = i
-      let fn:Function | undefined = validHooks[i];
+      let fn:CallableFunction | undefined = validHooks[i];
       if (i === validHooks.length) fn = next;
       if (!fn) return Promise.resolve();
       try {
@@ -47,7 +48,7 @@ export function nestHooks(hooks: HookFunction | HookFunction[] | null):HookFunct
   }
 }
 
-export function nestReversedHooks(hooks: HookFunction | HookFunction[] | null) {
+export function nestReversedHooks(hooks: HookFunction | HookFunction[] | null): HookFunction {
   return nestHooks(ensureHooks(hooks).reverse());
 }
 
@@ -58,7 +59,7 @@ export function nestReversedHooks(hooks: HookFunction | HookFunction[] | null) {
  */
 export function sequenceHooks(hooks: HookFunction | HookFunction[] | null):HookFunction {
   const validHooks:HookFunction[] = ensureHooks(hooks);
-  return async function (context: any, next?:Function):Promise<any> {
+  return async function (context: unknown, next?:CallableFunction):Promise<void> {
     for(const hook of validHooks) {
       await hook(context, noopHook);
     }
@@ -76,16 +77,16 @@ export function sequenceReversedHooks(hooks: HookFunction | HookFunction[] | nul
  * @category utils
  */
 export function parallelHooks(hooks: HookFunction | HookFunction[] | null): HookFunction {
-  const validHooks:Function[] = ensureHooks(hooks);
-  return async function (context: any, next?:Function):Promise<any> {
-    await Promise.all(validHooks.map((hook: Function) => {
+  const validHooks:CallableFunction[] = ensureHooks(hooks);
+  return async function (context: unknown, next?:CallableFunction):Promise<void> {
+    await Promise.all(validHooks.map((hook: CallableFunction) => {
       return Promise.resolve(hook(context, noopHook));
     }))
     !!next && await next(context);
   }
 }
 
-export function parallelReversedHooks(hooks: HookFunction | HookFunction[] | null) {
+export function parallelReversedHooks(hooks: HookFunction | HookFunction[] | null): HookFunction {
   return sequenceHooks(ensureHooks(hooks).reverse());
 }
 
@@ -126,17 +127,17 @@ export function traceTreeNodeHook(
  *
  * @category utils
  */
-export function bindHookContext(targetContext: any, hook: HookFunction): HookFunction {
-  return async function (context: any, next?:Function):Promise<any> {
+export function bindHookContext(targetContext: unknown, hook: HookFunction): HookFunction {
+  return async function (context: unknown, next?:CallableFunction):Promise<void> {
     await hook(targetContext);
     !!next && await next(context);
   }
 }
 
 export function conditionHook(
-  condition: (context: any) => boolean,
+  condition: (context: unknown) => boolean,
   hook: HookFunction): HookFunction {
-  return async function (context: any, next?:Function):Promise<any> {
+  return async function (context: unknown, next?:CallableFunction):Promise<unknown> {
     if (!condition(context)) {
       return next && await next();
     }
@@ -144,7 +145,3 @@ export function conditionHook(
     return await hook(context, next);
   }
 }
-
-
-
-

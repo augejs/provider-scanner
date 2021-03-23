@@ -1,12 +1,7 @@
-import { Metadata } from './Metadata';
-import { HookFunction } from '../utils';
+/* eslint-disable @typescript-eslint/ban-types */
 
-/** @ignore */
-const noopHooks = [
-  async (_: any, next: Function) => {
-    await next();
-  }
-];
+import { HookFunction, noopHook } from '../utils/hookUtil';
+import { Metadata } from './Metadata';
 
 export class HookMetadata {
   /**
@@ -19,6 +14,6 @@ export class HookMetadata {
   }
 
   static getMetadata(target: object): HookFunction[] {
-    return Metadata.getMetadata(HookMetadata, target) as HookFunction[] || noopHooks;
+    return Metadata.getMetadata(HookMetadata, target) as HookFunction[] || [ noopHook ];
   }
 }

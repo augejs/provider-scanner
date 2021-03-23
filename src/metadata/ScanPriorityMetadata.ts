@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { IScanNode } from "../interfaces";
 import { Metadata } from './Metadata';
 
+type PrioritySortCompareFn = (a:IScanNode, b:IScanNode) => number;
+
 /** @ignore */
-export function defaultPrioritySortCompare (a:IScanNode, b:IScanNode):number {
+export const defaultPrioritySortCompare: PrioritySortCompareFn = (a:IScanNode, b:IScanNode):number => {
   // the bigger has the higher priority
   return b.priority - a.priority;
 }
 
 export class ScanPriorityMetadata {
-  static defineMetadata(target: object, priority:number = 0):void {
+  static defineMetadata(target: object, priority = 0):void {
     /**
      * define the metadata of scan priority
      */
@@ -16,7 +19,7 @@ export class ScanPriorityMetadata {
   }
 
   static getMetadata(target: object): number {
-    return Metadata.getMetadata(ScanPriorityMetadata, target) || 0;
+    return Metadata.getMetadata(ScanPriorityMetadata, target) as number ?? 0;
   }
 }
 
@@ -24,12 +27,12 @@ export class ScanPrioritySortCompareMetadata {
   /**
    * define the metadata of scan priority sort compare function metadata
    */
-  static defineMetadata(target: object, sortCompare:Function):void {
+  static defineMetadata(target: object, sortCompare:PrioritySortCompareFn):void {
     Metadata.defineMetadata(ScanPrioritySortCompareMetadata, sortCompare, target);
   }
 
   static getMetadata(target: object):  (a: IScanNode, b: IScanNode) => number {
-    return Metadata.getMetadata(ScanPrioritySortCompareMetadata, target) || defaultPrioritySortCompare;
+    return Metadata.getMetadata(ScanPrioritySortCompareMetadata, target) as PrioritySortCompareFn || defaultPrioritySortCompare;
   }
 }
 

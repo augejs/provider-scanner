@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { HookMetadata } from './HookMetadata';
 import * as hookUtil from '../utils/hookUtil';
 
@@ -5,35 +6,35 @@ describe('decorators: ScanPriority', () => {
   it('should ScanPriority decorator has correctly value', async () => {
     const fn = jest.fn();
 
-    class A {};
+    class A {}
     HookMetadata.defineMetadata(A, [
-      async (_:any, next: Function) => {
+      async (_:unknown, next?: CallableFunction) => {
         fn('1-1');
-        await next();
+        next && await next();
         fn('1-2');
       },
-      async (_:any, next: Function) => {
+      async (_:unknown, next?: CallableFunction) => {
         fn('2-1');
-        await next();
+        next && await next();
         fn('2-2');
       }
     ])
 
     HookMetadata.defineMetadata(A, [
-      async (_:any, next: Function) => {
+      async (_:unknown, next?: CallableFunction) => {
         fn('3-1');
-        await next();
+        next && await next();
         fn('3-2');
       },
-      async (_:any, next: Function) => {
+      async (_:unknown, next?: CallableFunction) => {
         fn('4-1');
-        await next();
+        next && await next();
         fn('4-2');
       }
     ])
-    HookMetadata.defineMetadata(A, async (_:any, next: Function) => {
+    HookMetadata.defineMetadata(A, async (_:unknown, next?: CallableFunction) => {
       fn('5-1');
-      await next();
+      next && await next();
       fn('5-2');
     })
 

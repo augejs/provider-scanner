@@ -11,5 +11,5 @@ export interface IScanContext {
    */
   rootScanNode?: IScanNode
 
-  [prop: string]: any
+  [prop: string]: unknown
 }

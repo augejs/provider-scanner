@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-types */
+
 import { Metadata } from './Metadata';
 
 /** @ignore */
@@ -18,14 +21,14 @@ export class NameMetadata {
   /**
    * define the metadata of name
    */
-  static defineMetadata (target: object, name:string = ''):void {
+  static defineMetadata (target: object, name?: string):void {
     const targetName:string = NameMetadata.getLowerCaseName(
-      name || (target.hasOwnProperty('name') ? (target as any).name : ''));
+      name ?? (target as any)?.name ?? '');
       Metadata.defineMetadata(NameMetadata, targetName, target);
   }
 
   static getMetadata (target: object):string {
-    return Metadata.getMetadata(NameMetadata, target) || '';
+    return Metadata.getMetadata(NameMetadata, target) as string || '';
   }
 }
 
