@@ -4,7 +4,7 @@ import { Metadata } from './Metadata';
 
 /** @ignore */
 export class ChildrenHooksCompositeFunctionMetadata {
-  static defineMetadata(target: unknown, fn: HookFunction):void {
+  static defineMetadata(target: object, fn: HookFunction):void {
     return Metadata.defineMetadata(ChildrenHooksCompositeFunctionMetadata, target, fn);
   }
 
