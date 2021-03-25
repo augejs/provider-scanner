@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 import { IScanNode } from "../interfaces";
 
-export type HookFunction = (context: unknown, next?: CallableFunction) => Promise<unknown>;
+export type HookFunction = (context: any, next?: CallableFunction) => Promise<unknown>;
 export type ComposeHooksFunction = (hooks: HookFunction | HookFunction[] | null) => HookFunction;
 
 /** @ignore */
@@ -18,7 +20,7 @@ export function ensureHooks(hooks: HookFunction | HookFunction[] | null):HookFun
 }
 
 /** @ignore */
-export async function noopHook(context: unknown, next?: CallableFunction):Promise<void> {
+export async function noopHook(context: any, next?: CallableFunction):Promise<void> {
   !!next && await next(context);
 }
 
@@ -135,9 +137,9 @@ export function bindHookContext(targetContext: unknown, hook: HookFunction): Hoo
 }
 
 export function conditionHook(
-  condition: (context: unknown) => boolean,
+  condition: (context: any) => boolean,
   hook: HookFunction): HookFunction {
-  return async function (context: unknown, next?:CallableFunction):Promise<unknown> {
+  return async function (context: any, next?:CallableFunction):Promise<unknown> {
     if (!condition(context)) {
       return next && await next();
     }

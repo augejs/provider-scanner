@@ -8,12 +8,12 @@ describe('decorators: ScanPriority', () => {
 
     class A {}
     HookMetadata.defineMetadata(A, [
-      async (_:unknown, next?: CallableFunction) => {
+      async (_, next?: CallableFunction) => {
         fn('1-1');
         next && await next();
         fn('1-2');
       },
-      async (_:unknown, next?: CallableFunction) => {
+      async (_, next?: CallableFunction) => {
         fn('2-1');
         next && await next();
         fn('2-2');
@@ -21,18 +21,18 @@ describe('decorators: ScanPriority', () => {
     ])
 
     HookMetadata.defineMetadata(A, [
-      async (_:unknown, next?: CallableFunction) => {
+      async (_, next?: CallableFunction) => {
         fn('3-1');
         next && await next();
         fn('3-2');
       },
-      async (_:unknown, next?: CallableFunction) => {
+      async (_, next?: CallableFunction) => {
         fn('4-1');
         next && await next();
         fn('4-2');
       }
     ])
-    HookMetadata.defineMetadata(A, async (_:unknown, next?: CallableFunction) => {
+    HookMetadata.defineMetadata(A, async (_, next?: CallableFunction) => {
       fn('5-1');
       next && await next();
       fn('5-2');
