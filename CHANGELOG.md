@@ -1,4 +1,4 @@
-# 1.0.0-rc.1 (2020-09-30)
+# 1.0.0 (2021-03-25)
 
 
 ### Bug Fixes
@@ -8,10 +8,12 @@
 * add trace tree node hook ([94bfd79](https://github.com/augejs/provider-scanner/commit/94bfd794d70c824c6edb9861b54a9d2b21a11410))
 * fix add get metadata ([1494f3b](https://github.com/augejs/provider-scanner/commit/1494f3bf051c2d294f938c773a986f4e8cc4a3d9))
 * fix add get metadata ([7d817a2](https://github.com/augejs/provider-scanner/commit/7d817a2671450bb112ffa301f59997d4fd7972d7))
+* fix lint error ([82f4201](https://github.com/augejs/provider-scanner/commit/82f42011fd52cc29cab9351f78f7ae701fbc638a))
 * fix the traverse tree node ([cfca3ab](https://github.com/augejs/provider-scanner/commit/cfca3ab446244302e2ecc010a301741bbb72cd74))
 * parent-metadata extends ability ([746e97c](https://github.com/augejs/provider-scanner/commit/746e97c446543cb9a467716aaf7ac63111bdb371))
 * refactor hook util ([213c8fa](https://github.com/augejs/provider-scanner/commit/213c8fa9e88c89ab91a19dc889b8a8db19735589))
 * refactor scan ([cff7eb2](https://github.com/augejs/provider-scanner/commit/cff7eb2dbefe022bf1ef797d1c5c3266106aa030))
+* refactor the lint format ([3fdfb5b](https://github.com/augejs/provider-scanner/commit/3fdfb5b46669ff3e538dec64fbc126c1bafe5b4d))
 * rm the name path from scan node ([c3851cb](https://github.com/augejs/provider-scanner/commit/c3851cbaa82410f0df3eb5029b0d4348e62289d9))
 * scan node hook order ([24ea5d1](https://github.com/augejs/provider-scanner/commit/24ea5d169a72df53c65f381c852355fdc081315b))
 * update change log ([cc2fce6](https://github.com/augejs/provider-scanner/commit/cc2fce6e14643b479189622e8b93e633c4fd94e2))
