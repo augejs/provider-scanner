@@ -8,12 +8,12 @@ describe('utils: scanner', () => {
 
     function B() {}
     NameMetadata.defineMetadata(B);
-    HookMetadata.defineMetadata(B, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(B, async (_:unknown, next: CallableFunction)=>{
       fn('B_1_start')
       next && await next();
       fn('B_1_end')
     });
-    HookMetadata.defineMetadata(B, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(B, async (_:unknown, next: CallableFunction)=>{
       fn('B_2_start')
       next && await next();
       fn('B_2_end')
@@ -21,12 +21,12 @@ describe('utils: scanner', () => {
 
     function E() {}
     NameMetadata.defineMetadata(E);
-    HookMetadata.defineMetadata(E, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(E, async (_:unknown, next: CallableFunction)=>{
       fn('E_1_start')
       next && await next();
       fn('E_1_end')
     });
-    HookMetadata.defineMetadata(E, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(E, async (_:unknown, next: CallableFunction)=>{
       fn('E_2_start')
       next && await next();
       fn('E_2_end')
@@ -34,13 +34,13 @@ describe('utils: scanner', () => {
 
     function C(){}
     NameMetadata.defineMetadata(C);
-    HookMetadata.defineMetadata(C, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(C, async (_:unknown, next: CallableFunction)=>{
       fn('C_1_start')
       next && await next();
       fn('C_1_end')
     });
 
-    HookMetadata.defineMetadata(C, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(C, async (_:unknown, next: CallableFunction)=>{
       fn('C_2_start')
       next && await next();
       fn('C_2_end')
@@ -52,12 +52,12 @@ describe('utils: scanner', () => {
 
     function D() {}
     NameMetadata.defineMetadata(D);
-    HookMetadata.defineMetadata(D, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(D, async (_:unknown, next: CallableFunction)=>{
       fn('D_1_start')
       next && await next();
       fn('D_1_end')
     });
-    HookMetadata.defineMetadata(D, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(D, async (_:unknown, next: CallableFunction)=>{
       fn('D_2_start')
       next && await next();
       fn('D_2_end')
@@ -65,12 +65,12 @@ describe('utils: scanner', () => {
 
     function A() {}
     NameMetadata.defineMetadata(A);
-    HookMetadata.defineMetadata(A, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(A, async (_:unknown, next: CallableFunction)=>{
       fn('A_1_start')
       next && await next();
       fn('A_1_end')
     });
-    HookMetadata.defineMetadata(A, async (_:unknown, next?: CallableFunction)=>{
+    HookMetadata.defineMetadata(A, async (_:unknown, next: CallableFunction)=>{
       fn('A_2_start')
       next && await next();
       fn('A_2_end')
@@ -97,13 +97,13 @@ describe('utils: scanner', () => {
       inputs: {
         name: 'test'
       },
-      contextScanHook: async (context: unknown, next?: CallableFunction) => {
+      contextScanHook: async (context: unknown, next: CallableFunction) => {
         contextHookMock();
-        next && await next();
+        await next();
       },
-      scanNodeScanHook: async (context: unknown, next?: CallableFunction) => {
+      scanNodeScanHook: async (context: unknown, next: CallableFunction) => {
         scanNodeHookMock();
-        next && await next();
+        await next();
       },
     });
     const results = [
