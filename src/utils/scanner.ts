@@ -75,10 +75,12 @@ export async function scan(provider:object, options?:ScanOptions): Promise<IScan
       ]
     }, hookUtil.nestHooks);
 
-  await hookUtil.nestHooks([
+  const hook: hookUtil.HookFunction = hookUtil.nestHooks([
     ...selfHooks,
     childrenHook,
-  ])(context, hookUtil.noopNext);
+  ]);
+
+  await hook(context, hookUtil.noopNext);
 
   return context;
 }
