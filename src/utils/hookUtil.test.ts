@@ -16,7 +16,7 @@ describe('utils: compositeHook', () => {
         next && await next();
         fn(3);
       }
-    ])(null);
+    ])(null, hookUtil.noopNext);
     expect(fn.mock.calls.flat()).toEqual([1,2,3,4]);
   })
 
@@ -31,7 +31,7 @@ describe('utils: compositeHook', () => {
         fn(3);
         fn(4);
       }
-    ])(null);
+    ])(null, hookUtil.noopNext);
     expect(fn.mock.calls.flat()).toEqual([1,2,3,4]);
   })
 
@@ -90,7 +90,7 @@ describe('utils: compositeHook', () => {
       ]
     );
 
-    await hook(null);
+    await hook(null, hookUtil.noopNext);
 
     expect(fn.mock.calls.flat()).toEqual([1,2,3,4,5,6,7,8,9,10,11,12]);
   })

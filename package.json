@@ -1,6 +1,6 @@
 {
   "name": "@augejs/provider-scanner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "`provider-scanner` is a scan framework for nodejs.",
   "main": "dist/main.js",
   "scripts": {
@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/augejs/provider-scanner#readme",
   "dependencies": {
-    "extend": "^3.0.2"
+    "extend": "^3.0.2",
+    "@types/extend": "^3.0.1"
   },
   "devDependencies": {
-    "@types/extend": "^3.0.1",
     "@types/jest": "^26.0.21",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",

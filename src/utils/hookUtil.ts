@@ -3,7 +3,7 @@
 
 import { IScanNode } from "../interfaces";
 
-export type HookFunction = (context: any, next?: CallableFunction) => Promise<unknown>;
+export type HookFunction = (context: any, next: CallableFunction) => Promise<unknown>;
 export type ComposeHooksFunction = (hooks: HookFunction | HookFunction[] | null) => HookFunction;
 
 /** @ignore */
@@ -20,9 +20,15 @@ export function ensureHooks(hooks: HookFunction | HookFunction[] | null):HookFun
 }
 
 /** @ignore */
-export async function noopHook(context: any, next?: CallableFunction):Promise<void> {
-  !!next && await next(context);
-}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const noopHook =  async (context: any, next: CallableFunction):Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+};
+
+/** @ignore */
+export const noopNext =  async ():Promise<void> => {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+};
 
 /**
  * nesting the hooks
@@ -32,7 +38,7 @@ export async function noopHook(context: any, next?: CallableFunction):Promise<vo
 export function nestHooks(hooks: HookFunction | HookFunction[] | null):HookFunction {
   const validHooks:CallableFunction[] = ensureHooks(hooks);
 
-  return function (context: unknown, next?:CallableFunction):Promise<unknown> {
+  return function (context: any, next:CallableFunction):Promise<unknown> {
     let index = -1;
     function dispatch (i:number): Promise<unknown> {
       if (i <= index) return Promise.reject(new Error('next() called multiple times'))
@@ -61,11 +67,11 @@ export function nestReversedHooks(hooks: HookFunction | HookFunction[] | null): 
  */
 export function sequenceHooks(hooks: HookFunction | HookFunction[] | null):HookFunction {
   const validHooks:HookFunction[] = ensureHooks(hooks);
-  return async function (context: unknown, next?:CallableFunction):Promise<void> {
+  return async function (context: any, next:CallableFunction):Promise<void> {
     for(const hook of validHooks) {
       await hook(context, noopHook);
     }
-    !!next && await next(context);
+    await next();
   }
 }
 
@@ -80,11 +86,12 @@ export function sequenceReversedHooks(hooks: HookFunction | HookFunction[] | nul
  */
 export function parallelHooks(hooks: HookFunction | HookFunction[] | null): HookFunction {
   const validHooks:CallableFunction[] = ensureHooks(hooks);
-  return async function (context: unknown, next?:CallableFunction):Promise<void> {
+  return async function (context: any, next:CallableFunction):Promise<void> {
     await Promise.all(validHooks.map((hook: CallableFunction) => {
       return Promise.resolve(hook(context, noopHook));
     }))
-    !!next && await next(context);
+
+    await next();
   }
 }
 
@@ -129,21 +136,21 @@ export function traceTreeNodeHook(
  *
  * @category utils
  */
-export function bindHookContext(targetContext: unknown, hook: HookFunction): HookFunction {
-  return async function (context: unknown, next?:CallableFunction):Promise<void> {
-    await hook(targetContext);
-    !!next && await next(context);
+export function bindHookContext(targetContext: any, hook: HookFunction): HookFunction {
+  return async function (context: any, next:CallableFunction):Promise<void> {
+    await hook(targetContext, noopNext);
+    await next();
   }
 }
 
 export function conditionHook(
   condition: (context: any) => boolean,
   hook: HookFunction): HookFunction {
-  return async function (context: any, next?:CallableFunction):Promise<unknown> {
+  return async function (context: any, next:CallableFunction):Promise<void> {
     if (!condition(context)) {
-      return next && await next();
+      await next();
     }
 
-    return await hook(context, next);
+    await hook(context, next);
   }
 }
