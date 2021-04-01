@@ -1,6 +1,6 @@
 {
   "name": "@augejs/provider-scanner",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "`provider-scanner` is a scan framework for nodejs.",
   "main": "dist/main.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "deploy": "npm run build && npm publish --access public",
     "lint": "eslint src --ext .ts",
     "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --coverage --watch",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "build:apiDoc": "rimraf apiDocs && typedoc --tsconfig ./tsconfig.json --options ./typedoc.config.json && mkdir -p ./apiDocs/docs/assets && cp -r ./docs/assets/* ./apiDocs/docs/assets",
     "deploy:apiDoc": "npm run build:apiDoc && gh-pages -d apiDocs"

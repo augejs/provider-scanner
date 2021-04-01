@@ -3,9 +3,12 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   setupFiles: ['./jest.setup.ts'],
-  coverageDirectory: "../coverage",
+  coverageDirectory: "./coverage",
   collectCoverageFrom: [
-    "**/*.(t|j)s"
+    "src/**/*.ts",
+    "!src/main.ts",
+    "!src/**/*index.ts",
+    "!src/**/*d.ts"
   ],
   transform: {
     "^.+\\.(t|j)s$": "ts-jest"
