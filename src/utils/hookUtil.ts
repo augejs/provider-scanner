@@ -22,9 +22,8 @@ export function ensureHooks(hooks: HookFunction | HookFunction[] | null):HookFun
 }
 
 /** @ignore */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const noopHook: HookFunction =  async (context: any, next: CallableFunction):Promise<void> => {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+export const noopHook: HookFunction =  async (_, next: CallableFunction):Promise<void> => {
+  await next();
 };
 
 /** @ignore */
@@ -143,7 +142,7 @@ export function traceTreeNodeHook(
 export function bindHookContext(targetContext: any, hook: HookFunction): HookFunction {
   return async function (context: any, next:CallableFunction):Promise<void> {
     await hook(targetContext, noopNext);
-    await next(context);
+    await next(context, noopNext);
   }
 }
 
