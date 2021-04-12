@@ -1,16 +1,14 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# https://sergiodxa.com/articles/github-actions-npm-publish
 
-name: Master PR CI
+name: CD
 
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
+    if: "contains(github.event.head_commit.message, '#prerelease')"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -21,7 +19,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
+    - run: npm ci --ignore-scripts
     - run: npm run lint
     - run: npm test
+      env:
+        CI: true
     - run: npm run build --if-present
