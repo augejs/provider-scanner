@@ -18,7 +18,7 @@ jobs:
       id: parse-version
       run: |
         ReleaseVer=`echo "${{ github.event.head_commit.message }}" | awk -F' ' '{print $2}'`
-        echo "::set-output name=RELEASE_VERSION::$ReleaseVer"
+        echo "::set-output name=RELEASE_VERSION::${ReleaseVer: 1}"
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -44,7 +44,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.AUGEJS_GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.parse-version.outputs.RELEASE_VERSION }}
-        release_name: Release ${{ steps.parse-version.outputs.RELEASE_VERSION }}
+        release_name: ${{ steps.parse-version.outputs.RELEASE_VERSION }}
         prerelease: false
         draft: false
         body: ${{ join(fromJson(steps.generate_notes.outputs.notes).notes, '') }}

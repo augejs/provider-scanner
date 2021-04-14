@@ -1,4 +1,4 @@
-## v1.0.4 (2021-04-13)
+## [1.0.4](https://github.com/augejs/provider-scanner/compare/c3851cbaa82410f0df3eb5029b0d4348e62289d9...v1.0.4) (2021-04-14)
 
 
 ### Bug Fixes
