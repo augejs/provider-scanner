@@ -26,3 +26,7 @@ jobs:
       env:
         CI: true
     - run: npm run build --if-present
+    - uses: lsegal/github-release-from-changelog-action@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.AUGEJS_GITHUB_TOKEN }}
+
