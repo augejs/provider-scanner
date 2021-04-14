@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    if: "startsWith(github.event.head_commit.message, 'chore(release): v')"
+    if: "startsWith(github.event.head_commit.message, 'chore(release):')"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -43,8 +43,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.AUGEJS_GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.parse-version.outputs.RELEASE_VERSION }}
-        release_name: ${{ steps.parse-version.outputs.RELEASE_VERSION }}
+        tag_name: v${{ steps.parse-version.outputs.RELEASE_VERSION }}
+        release_name: v${{ steps.parse-version.outputs.RELEASE_VERSION }}
         prerelease: false
         draft: false
         body: ${{ join(fromJson(steps.generate_notes.outputs.notes).notes, '') }}
