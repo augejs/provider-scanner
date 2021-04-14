@@ -137,7 +137,6 @@ Provider A is parent of Provider B
 >
 > the B  hooks seem is inner A
 
-
 So finally, the scanner go through the provider tree and execute all the hooks around the provide. You can do every thing you want base on provider metadata and hooks to build anything.
 
 ![scan-execute-order](./docs/assets/scan-execute-order.png)
