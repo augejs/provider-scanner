@@ -4,17 +4,20 @@ name: CD
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [ master ]
 
 jobs:
   build:
-    # if: "startsWith(github.event.head_commit.message, 'chore: release v')"
+    if: "startsWith(github.event.head_commit.message, 'chore(release): v')"
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
     steps:
+     - name: Parse Version Form Commit Message
+      run: |
+        ReleaseVer=`echo "${{ github.event.head_commit.message }}" | awk -F' ' '{print $2}'`
+        echo "Release version: $ReleaseVer"
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -27,7 +30,16 @@ jobs:
       env:
         CI: true
     - run: npm run build --if-present
-    - uses: lsegal/github-release-from-changelog-action@latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.AUGEJS_GITHUB_TOKEN }}
+    # - name: Github Release
+    #     id: create_release
+    #     uses: actions/create-release@v1
+    #     env:
+    #       GITHUB_TOKEN: ${{ secrets.AUGEJS_GITHUB_TOKEN }}
+    #     with:
+    #       tag_name: ${{ github.ref }}
+    #       release_name: Release ${{ github.ref }}
+    #       prerelease: false
+    #       draft: false
+    #       body: ${{join(fromJson(steps.generate_notes.outputs.notes).notes, '')}}
+
 
