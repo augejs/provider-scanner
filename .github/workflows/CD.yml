@@ -48,3 +48,6 @@ jobs:
         prerelease: false
         draft: false
         body: ${{ join(fromJson(steps.generate_notes.outputs.notes).notes, '') }}
+    - run: npm publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.AUGEJS_NPM_TOKEN}}
