@@ -41,4 +41,4 @@ jobs:
         release_name: Release ${{ steps.parse-version.outputs.RELEASE_VERSION }}
         prerelease: false
         draft: false
-        body: ${{join(fromJson(steps.generate_notes.outputs.notes).notes, '')}}
+        body: ${{ join(fromJson(steps.generate_notes.outputs.notes).notes, '') }}
