@@ -14,10 +14,11 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
-    - name: Parse Version Form Commit Message
+    - name: Parse Version From Commit Message
+      id: parse-version
       run: |
         ReleaseVer=`echo "${{ github.event.head_commit.message }}" | awk -F' ' '{print $2}'`
-        echo "Release version: $ReleaseVer"
+        echo "::set-output name=RELEASE_VERSION::$ReleaseVer"
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -30,6 +31,7 @@ jobs:
       env:
         CI: true
     - run: npm run build --if-present
+    - run: echo "Release version $ReleaseVer ${{ steps.parse-version.outputs.RELEASE_VERSION }}"
     # - name: Github Release
     #     id: create_release
     #     uses: actions/create-release@v1
