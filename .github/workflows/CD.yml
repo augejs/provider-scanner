@@ -14,7 +14,7 @@ jobs:
       matrix:
         node-version: [12.x]
     steps:
-     - name: Parse Version Form Commit Message
+    - name: Parse Version Form Commit Message
       run: |
         ReleaseVer=`echo "${{ github.event.head_commit.message }}" | awk -F' ' '{print $2}'`
         echo "Release version: $ReleaseVer"
