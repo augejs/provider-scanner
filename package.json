@@ -1,6 +1,6 @@
 {
   "name": "@augejs/provider-scanner",
-  "version": "1.0.5",
+  "version": "1.0.5-rc.1",
   "description": "`provider-scanner` is a scan framework for nodejs.",
   "main": "dist/main.js",
   "scripts": {
