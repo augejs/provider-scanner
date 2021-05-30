@@ -1,4 +1,4 @@
-import { IScanNode as ScanNode } from './ScanNode';
+import { ScanNode } from './ScanNode';
 
 /**
  * ScanContext
