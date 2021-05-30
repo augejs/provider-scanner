@@ -1,45 +1,44 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { IScanContext } from './IScanContext';
+import { ScanContext } from './ScanContext';
 
 /**
- * IScanNode
+ * ScanNode
  *
  * @category interface
  */
-export interface IScanNode {
-
+export interface ScanNode {
   /**
    * the context of scan node
    */
-  context: IScanContext
+  context: ScanContext;
   /**
    * the provider of scan node
    */
-  provider: object
+  provider: object;
 
   /**
    * the children scan nodes of current scan node
    */
-  children: IScanNode[]
+  children: ScanNode[];
   /**
    * the parent scan node of current scan node
    */
-  parent: IScanNode | null
+  parent: ScanNode | null;
   /**
    * the sort priority of current scan node
    */
-  priority:number,
+  priority: number;
   /**
    * the name  of current scan node
    */
-  name: string,
+  name: string;
   /**
-  * @ignore
-  */
+   * @ignore
+   */
   /**
    * namePath is the unique name path of scanNode
    */
-  namePaths: string[] //[name, name, name]
+  namePaths: string[]; //[name, name, name]
 
-  [prop: string]: unknown
+  [prop: string]: unknown;
 }

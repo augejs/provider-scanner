@@ -1,7 +1,10 @@
-import { ScanPriorityMetadata, defaultPrioritySortCompare } from './ScanPriorityMetadata';
-import { IScanNode } from '../interfaces/IScanNode';
+import {
+  ScanPriorityMetadata,
+  defaultPrioritySortCompare,
+} from './ScanPriorityMetadata';
+import { ScanNode } from '../interfaces/ScanNode';
 
-function createScanNode(priority: number):IScanNode {
+function createScanNode(priority: number): ScanNode {
   return {
     context: {},
     provider: {},
@@ -9,15 +12,15 @@ function createScanNode(priority: number):IScanNode {
     parent: null,
     priority,
     name: '',
-    namePaths: []
-  }
+    namePaths: [],
+  };
 }
 
 describe('decorators: ScanPriority', () => {
   it('should ScanPriority decorator has correctly value', () => {
-      const A = {};
-      ScanPriorityMetadata.defineMetadata(A, 3);
-      expect(ScanPriorityMetadata.getMetadata(A)).toEqual(3);
+    const A = {};
+    ScanPriorityMetadata.defineMetadata(A, 3);
+    expect(ScanPriorityMetadata.getMetadata(A)).toEqual(3);
 
     const B = {};
     ScanPriorityMetadata.defineMetadata(B, 3);
@@ -29,10 +32,10 @@ describe('decorators: ScanPriority', () => {
     ScanPriorityMetadata.defineMetadata(C, 2);
     ScanPriorityMetadata.defineMetadata(C, -1);
     expect(ScanPriorityMetadata.getMetadata(C)).toEqual(-1);
-  })
+  });
 
   it('should higher priority number means higher priority ', () => {
-    const scanNodes:IScanNode[] = [
+    const scanNodes: ScanNode[] = [
       createScanNode(1),
       createScanNode(5),
       createScanNode(2),
@@ -41,10 +44,10 @@ describe('decorators: ScanPriority', () => {
     ];
     scanNodes.sort(defaultPrioritySortCompare);
 
-    const priorities = scanNodes.map((item: IScanNode) => {
+    const priorities = scanNodes.map((item: ScanNode) => {
       return item.priority;
-    })
+    });
 
-    expect(priorities).toEqual([5,3,2,1,-1]);
-  })
-})
+    expect(priorities).toEqual([5, 3, 2, 1, -1]);
+  });
+});
