@@ -1,2 +1,2 @@
-export * from './IScanNode';
-export * from './IScanContext';
+export * from './ScanNode';
+export * from './ScanContext';

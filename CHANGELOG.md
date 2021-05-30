@@ -4,7 +4,7 @@
 
 ## [1.0.5](https://github.com/augejs/provider-scanner/compare/v1.0.4...v1.0.5) (2021-04-14)
 
-No release here, just a CD test.
+
 
 ## [1.0.4](https://github.com/augejs/provider-scanner/compare/c3851cbaa82410f0df3eb5029b0d4348e62289d9...v1.0.4) (2021-04-14)
 
