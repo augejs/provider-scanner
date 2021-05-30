@@ -1,3 +1,7 @@
+## [1.0.7](https://github.com/augejs/provider-scanner/compare/v1.0.6...v1.0.7) (2021-05-30)
+
+
+
 ## [1.0.5-rc.1](https://github.com/augejs/provider-scanner/compare/v1.0.5...v1.0.5-rc.1) (2021-04-15)
 
 
